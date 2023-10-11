@@ -26,7 +26,7 @@ jobs:
             function_name=$(basename $file .py)
             # Check if the Lambda function exists, if not, create it; otherwise, update it
             if aws lambda get-function-configuration --function-name $function_name 2>/dev/null; then
-              aws lambda update-function-code --function-name $function_name --zip-file fileb://$file
+              aws lambda update-function-code --function-name=$function_name --zip-file fileb://$file
             else
               aws lambda create-function --function-name $function_name \
                 --runtime python3.10 \
