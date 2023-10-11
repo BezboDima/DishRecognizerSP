@@ -20,18 +20,18 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r my-layer/requirements.txt -t my-layer/python
+        pip install -r layers/common-layer/requirements.txt -t my-layer/python
 
     - name: Create Lambda Layer
       run: |
-        cd my-layer
-        zip -r my-layer.zip .
+        cd layers/common-layer
+        zip -r common-layer.zip .
         aws lambda publish-layer-version \
-          --layer-name my-custom-layer \
-          --description "My Custom Layer" \
+          --layer-name common-layer \
+          --description "Common Layer" \
           --compatible-runtimes python3.8 \
           --license-info "MIT" \
-          --zip-file fileb://my-layer.zip
+          --zip-file fileb://common-layer.zip
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
