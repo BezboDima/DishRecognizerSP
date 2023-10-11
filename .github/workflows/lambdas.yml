@@ -3,7 +3,7 @@ name: Deploy Lambda Functions to AWS
 on:
   push:
     branches:
-      - main
+      - lambda
 
 jobs:
   deploy:
@@ -40,7 +40,7 @@ jobs:
               aws lambda update-function-code --function-name $function_name --zip-file fileb://$file
             else
               aws lambda create-function --function-name $function_name \
-                --runtime python3.8 \
+                --runtime python3.10 \
                 --handler lambda_handler \
                 --role arn:aws:iam::123456789012:role/lambda-role \
                 --code fileb://$file
