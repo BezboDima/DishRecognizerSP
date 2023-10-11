@@ -27,7 +27,7 @@ jobs:
 
     - name: Create Lambda Layer
       run: |
-        zip -j common-layer.zip ./layers/common_layer/*
+        zip -j common_layer.zip ./layers/common_layer/*
         aws lambda publish-layer-version \
           --layer-name common_layer \
           --description "Common Layer" \
