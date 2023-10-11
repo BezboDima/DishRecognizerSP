@@ -1,0 +1,37 @@
+name: Create Lambda Layer
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-layer:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install -r my-layer/requirements.txt -t my-layer/python
+
+    - name: Create Lambda Layer
+      run: |
+        cd my-layer
+        zip -r my-layer.zip .
+        aws lambda publish-layer-version \
+          --layer-name my-custom-layer \
+          --description "My Custom Layer" \
+          --compatible-runtimes python3.8 \
+          --license-info "MIT" \
+          --zip-file fileb://my-layer.zip
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
