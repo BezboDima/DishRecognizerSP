@@ -3,7 +3,7 @@ name: Create Lambda Layer
 on:
   push:
     branches:
-      - main
+      - lambda
 
 jobs:
   build-layer:
