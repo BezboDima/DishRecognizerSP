@@ -28,7 +28,6 @@ jobs:
               echo "$dir"
               dir_name=$(basename "$dir")
 
-              zip -j $dir_name.zip ./LambdaFunctions/PythonTest/*
               zip -j $dir_name.zip $dir/*
 
               echo "Created $dir_name.zip"
