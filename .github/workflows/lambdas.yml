@@ -25,6 +25,7 @@ jobs:
           for dir in ./LambdaFunctions/*; do
             if [ -d "$dir" ]; then
 
+              echo "$dir"
               dir_name=$(basename "$dir")
               zip -r "$dir_name.zip" "$dir"
 
