@@ -33,6 +33,6 @@ jobs:
               aws lambda update-function-code \
                 --function-name "$dir_name" \
                 --zip-file "fileb://$dir_name.zip" \
-
-            echo "Updated $function_name"
+              echo "Updated $function_name"
+            fi
           done
