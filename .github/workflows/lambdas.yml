@@ -22,7 +22,7 @@ jobs:
       - name: Deploy Lambda Functions
         run: |
           # Loop through all Python files in your project directory
-          for dir in ./LambdaFunction/*; do
+          for dir in ./LambdaFunctions/*; do
             if [ -d "$dir"]; then
 
               dir_name=$(basename "$dir")
