@@ -30,9 +30,7 @@ jobs:
 
               echo "Created $dir_name.zip"
               # Check if the Lambda function exists, if not, create it; otherwise, update it
-              aws lambda update-function-code \
-                --function-name "$dir_name" \
-                --zip-file "fileb://$dir_name.zip" \
+              aws lambda update-function-code --function-name="$dir_name" --zip-file=fileb://$dir_name.zip
               echo "Updated $function_name"
             fi
           done
