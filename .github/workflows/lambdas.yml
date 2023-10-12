@@ -22,16 +22,17 @@ jobs:
       - name: Deploy Lambda Functions
         run: |
           # Loop through all Python files in your project directory
-          for file in $(find ./LambdaFunction/PythonTest -type f -name "*.py"); do
-            function_name=$(basename $file .py)
-            # Check if the Lambda function exists, if not, create it; otherwise, update it
-            if aws lambda get-function-configuration --function-name $function_name 2>/dev/null; then
-              aws lambda update-function-code --function-name=$function_name --zip-file fileb://$file
-            else
-              aws lambda create-function --function-name $function_name \
-                --runtime python3.10 \
-                --handler lambda_handler \
-                --role arn:aws:iam::123456789012:role/lambda-role \
-                --code fileb://$file
-            fi
+          for dir in ./LambdaFunction/*; do
+            if [ -d "$dir"]; then
+
+              dir_name=$(basename "$dir")
+              zip -r "$dir_name.zip" "$dir"
+
+              echo "Created $dir_name.zip"
+              # Check if the Lambda function exists, if not, create it; otherwise, update it
+              aws lambda update-function-code \
+                --function-name "$dir_name" \
+                --zip-file "fileb://$dir_name.zip" \
+
+            echo "Updated $function_name"
           done
