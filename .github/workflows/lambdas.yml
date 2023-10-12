@@ -27,7 +27,7 @@ jobs:
 
               echo "$dir"
               dir_name=$(basename "$dir")
-              zip -r "$dir_name.zip" "$dir"
+              zip -j "$dir_name.zip" "$dir/*"
 
               echo "Created $dir_name.zip"
               # Check if the Lambda function exists, if not, create it; otherwise, update it
