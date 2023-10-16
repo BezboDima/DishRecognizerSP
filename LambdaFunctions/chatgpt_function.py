@@ -3,7 +3,7 @@ import openai
 
 def lambda_handler(event, context):
     # TODO implement
-    openai.api_key = "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"
+    openai.api_key = ""
     prompt = str(event['prompt'])
     completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role":"user", "content":prompt}])
     
