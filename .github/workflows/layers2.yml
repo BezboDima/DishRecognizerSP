@@ -1,11 +1,6 @@
 name: Deploy Lambda Layer
 
 on:
-  push:
-    branches:
-      - lambda  # Change to the appropriate branch
-
-on:
   workflow_dispatch:
     inputs:
       layer_name:
