@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - lambda
-
+      
 jobs:
   build-layer:
     runs-on: ubuntu-latest
@@ -31,7 +31,7 @@ jobs:
         aws lambda publish-layer-version \
           --layer-name common_layer \
           --description "Common Layer" \
-          --compatible-runtimes python3.10 \
+          --compatible-runtimes python3.8 \
           --license-info "MIT" \
           --zip-file fileb://common_layer.zip
       env:

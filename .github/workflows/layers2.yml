@@ -10,34 +10,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Docker
-      run: |
-        docker build -t lambda-layer .
-        docker run --name lambda-layer-container -v ${{ github.workspace }}:/app lambda-layer
-        docker cp lambda-layer-container:/app/requests-layer.zip .
-        docker stop lambda-layer-container
-        docker rm lambda-layer-container
-        docker rmi --force lambda-layer
-      working-directory: ${{ github.workspace }}
+      - name: Set up Docker
+        run: |
+          docker build -t lambda-layer .
+          docker run --name lambda-layer-container -v ${{ github.workspace }}:/app lambda-layer
+          docker cp lambda-layer-container:/app/requests-layer.zip .
+          docker stop lambda-layer-container
+          docker rm lambda-layer-container
+          docker rmi --force lambda-layer
+        working-directory: ${{ github.workspace }}
 
-    - name: Create AWS Lambda Layer
-    run: |
-        aws lambda publish-layer-version \
-          --layer-name requests-layer \
-          --description "requests-layer" \
-          --compatible-runtimes python3.8 \
-          --license-info "MIT" \
-          --zip-file fileb://requests-layer.zip
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_EC2_METADATA_DISABLED: true
-        AWS_DEFAULT_REGION: us-east-1
+      - name: Create AWS Lambda Layer
+        run: |
+          aws lambda publish-layer-version \
+            --layer-name requests-layer \
+            --description "requests-layer" \
+            --compatible-runtimes python3.8 \
+            --license-info "MIT" \
+            --zip-file fileb://requests-layer.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_EC2_METADATA_DISABLED: true
+          AWS_DEFAULT_REGION: us-east-1
 
-    - name: Cleanup
-      run: |
-        rm requests-layer.zip
-      working-directory: ${{ github.workspace }}
+      - name: Cleanup
+        run: |
+          rm requests-layer.zip
+        working-directory: ${{ github.workspace }}
