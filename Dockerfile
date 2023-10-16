@@ -1,3 +1,5 @@
+ARG REQUIREMENTS_PATH
+ARG LAYER_NAME
 # Use the official Python runtime as the base image
 FROM python:3.8-slim-buster
 
@@ -9,7 +11,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file to the working directory
-COPY requirements.txt .
+COPY $REQUIREMENTS_PATH requirements.txt
 
 # Install the Python packages listed in requirements.txt
 RUN pip install -r requirements.txt -t /opt/python/
@@ -17,4 +19,4 @@ RUN pip install -r requirements.txt -t /opt/python/
 # Set the CMD to zip the installed packages into a layer
 # change the `requests-layer` to the LAYER_NAME variable as per create_layer.sh file
 
-CMD cd /opt && zip -r9 /app/requests-layer.zip .
+CMD cd /opt && zip -r9 /app/$LAYER_NAME.zip .
