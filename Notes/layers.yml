@@ -1,0 +1,41 @@
+name: Create Lambda Layer
+
+on:
+  push:
+    branches:
+      - lambda
+      
+jobs:
+  build-layer:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        # Semantic version range syntax or exact version of a Python version
+        python-version: '3.10'
+        # Optional - x64 or x86 architecture, defaults to x64
+        architecture: 'x64'
+
+    - name: Install dependencies
+      run: |
+        pip install -r layers/common_layer/requirements.txt -t my-layer/python
+
+    - name: Create Lambda Layer
+      run: |
+        zip -j common_layer.zip ./layers/common_layer/*
+        aws lambda publish-layer-version \
+          --layer-name common_layer \
+          --description "Common Layer" \
+          --compatible-runtimes python3.8 \
+          --license-info "MIT" \
+          --zip-file fileb://common_layer.zip
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_EC2_METADATA_DISABLED: true
+        AWS_DEFAULT_REGION: us-east-1
