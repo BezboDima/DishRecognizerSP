@@ -45,6 +45,7 @@ device = (
 print(f"Using {device} device")
 
 # Define model
+
 class NeuralNetwork(nn.Module):
     def __init__(self):
         super().__init__()
