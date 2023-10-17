@@ -1,0 +1,43 @@
+name: Deploy Lambda Function
+
+on:
+  workflow_dispatch:
+    inputs:
+      function-name:
+        description: 'Lambda function name'
+        required: true
+      code-path:
+        description: 'Path to the Lambda function code'
+        required: true
+      handler:
+        description: 'Handler of lambda Function'
+        required: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1  # Change to your AWS region
+    - name: Create and Deploy Lambda Function
+      run: |
+        # Define your Lambda function configuration and code deployment steps here.
+        # Use AWS CLI, CloudFormation, or other methods to create and deploy the Lambda function.
+
+        zip -j ${{ github.event.inputs.function-name }}.zip ${{ github.event.inputs.code-path }}/*
+
+        # Example AWS CLI command to create a new Lambda function from a ZIP package
+        aws lambda create-function \
+          --function-name ${{ github.event.inputs.function-name }} \
+          --runtime python3.8 \
+          --handler ${{ github.event.inputs.handler }} \
+          --role arn:aws:iam::514157727917:role/gh-create-function \
+          --zip-file fileb://${{ github.event.inputs.function-name }}.zip
+        aws lambda publish-version --function-name ${{ github.event.inputs.function-name }}
