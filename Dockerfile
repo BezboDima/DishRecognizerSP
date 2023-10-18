@@ -1,4 +1,5 @@
 ARG REQUIREMENTS_PATH
+ARG LAYER_NAME
 # Use the official Python runtime as the base image
 FROM python:3.8-slim-buster
 
@@ -18,6 +19,6 @@ RUN pip install -r requirements.txt -t /opt/python/
 # Set the CMD to zip the installed packages into a layer
 # change the `requests-layer` to the LAYER_NAME variable as per create_layer.sh file
 
-ENV LAYER_N=req
+ENV LAYER_N=request
 
 CMD cd /opt && zip -r9 /app/${LAYER_N}.zip .
