@@ -19,7 +19,7 @@ jobs:
 
       - name: Set up Docker
         run: |
-          docker build --build-arg REQUIREMENTS_PATH=${{ github.event.inputs.path_to_req }} --build-arg LAYER_NAME=${{ github.event.inputs.path_to_req }} -t lambda-layer .
+          docker build --build-arg REQUIREMENTS_PATH=${{ github.event.inputs.path_to_req }} --build-arg LAYER_NAME=request -t lambda-layer .
           docker run --name lambda-layer-container -v ${{ github.workspace }}:/app lambda-layer
           docker cp lambda-layer-container:/app/${{ github.event.inputs.layer_name }}.zip .
           docker stop lambda-layer-container
