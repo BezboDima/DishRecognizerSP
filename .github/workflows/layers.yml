@@ -31,7 +31,7 @@ jobs:
         run: |
           aws lambda publish-layer-version \
             --layer-name ${{ github.event.inputs.layer_name }} \
-            --description ${{ github.event.inputs.description }}" \
+            --description "${{ github.event.inputs.description }}" \
             --compatible-runtimes python3.8 \
             --license-info "MIT" \
             --zip-file fileb://${{ github.event.inputs.layer_name }}.zip
