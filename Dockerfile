@@ -19,4 +19,4 @@ RUN pip install -r requirements.txt -t /opt/python/
 # Set the CMD to zip the installed packages into a layer
 # change the `requests-layer` to the LAYER_NAME variable as per create_layer.sh file
 
-CMD cd /opt && zip -r9 /app/$LAYER_NAME.zip .
+CMD cd /opt && zip -r9 /app/request.zip .
