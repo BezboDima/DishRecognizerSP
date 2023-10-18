@@ -11,14 +11,14 @@ export default function Home() {
 	return (
 		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
 			<div className="inline-block max-w-lg text-center justify-center">
-				<h1 className={title()}>Make&nbsp;</h1>
-				<h1 className={title({ color: "violet" })}>beautiful&nbsp;</h1>
+				<h1 className={title()}>Welcome to &nbsp;</h1>
+				<h1 className={title({ color: "green" })}>IngredentLens&nbsp;</h1>
 				<br />
 				<h1 className={title()}>
-					websites regardless of your design experience.
+					use the power of AI to find repcipes based on what you have
 				</h1>
 				<h2 className={subtitle({ class: "mt-4" })}>
-					Beautiful, fast and modern React UI library.
+					Cook like a machine
 				</h2>
 			</div>
 
@@ -29,7 +29,7 @@ export default function Home() {
 					href={siteConfig.links.docs}
 					className={buttonStyles({ color: "primary", radius: "full", variant: "shadow" })}
 				>
-					Documentation
+					Click me for the Application 
 				</Link>
 				<Link
 					isExternal
@@ -42,13 +42,7 @@ export default function Home() {
 				</Link>
 			</div>
 
-			<div className="mt-8">
-				<Snippet hideSymbol hideCopyButton variant="flat">
-					<span>
-						Get started by editing <Code color="primary">app/page.tsx</Code>
-					</span>
-				</Snippet>
-			</div>
+			
 		</section>
 	);
 }
