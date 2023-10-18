@@ -11,7 +11,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file to the working directory
-COPY $REQUIREMENTS_PATH requirements.txt
+COPY $REQUIREMENTS_PATH .
 
 # Install the Python packages listed in requirements.txt
 RUN pip install -r requirements.txt -t /opt/python/
