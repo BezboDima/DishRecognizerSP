@@ -21,7 +21,7 @@ jobs:
         run: |
           docker build --build-arg REQUIREMENTS_PATH=${{ github.event.inputs.path_to_req }} -t lambda-layer .
           docker run --name lambda-layer-container -v ${{ github.workspace }}:/app lambda-layer
-          docker cp lambda-layer-container:/app/${{ github.event.inputs.layer_name }}.zip .
+          docker cp lambda-layer-container:/app/layer.zip .
           docker stop lambda-layer-container
           docker rm lambda-layer-container
           docker rmi --force lambda-layer
