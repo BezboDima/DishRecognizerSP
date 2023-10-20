@@ -29,7 +29,7 @@ export default function Home() {
 					href={siteConfig.links.docs}
 					className={buttonStyles({ color: "primary", radius: "full", variant: "shadow" })}
 				>
-					Click me for the Application 
+					Use the power of Lens 
 				</Link>
 				<Link
 					isExternal
