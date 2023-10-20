@@ -20,5 +20,5 @@ RUN pip install -r requirements.txt -t /opt/python/
 # change the `requests-layer` to the LAYER_NAME variable as per create_layer.sh file
 
 ENV LAYER_N=$LAYER_NAME
-
-CMD cd /opt && zip -r9 /app/${LAYER_N}.zip .
+ENTRYPOINT ["/bin/sh", "-c", "cd /opt && zip -r9 /app/${LAYER_N}.zip ."]
+#CMD cd /opt && zip -r9 /app/${LAYER_N}.zip .
