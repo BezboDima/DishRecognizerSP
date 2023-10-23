@@ -30,7 +30,7 @@ export default function Home() {
 					href={siteConfig.links.docs}
 					className={buttonStyles({ color: "primary", radius: "full", variant: "shadow" })}
 				>
-					Click Me for the Application 
+					Click me for the Application 
 				</Link>
 				<Link
 					isExternal
