@@ -19,7 +19,7 @@ export default function AboutPage() {
 
 			<h2>Our Mission</h2>
 			<p>
-				Our mission is to provide high-quality products and services to our customers. We are committed to continuous improvement and strive to exceed our customers' expectations.
+				Our mission is to provide high-quality products and services to our customers. We are committed to continuous improvement and strive to exceed our customers&apos; expectations.
 			</p>
 		</div>
 	);
