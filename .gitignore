@@ -1,6 +1,2 @@
 .gitignore
 keys.txt
-node_modules/
-.next/
-.swc/
-.*.env
