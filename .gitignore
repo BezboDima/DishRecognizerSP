@@ -1,4 +1,6 @@
 .gitignore
 keys.txt
-.nxet
-node_modules
+node_modules/
+.next/
+.swc/
+.*.env
