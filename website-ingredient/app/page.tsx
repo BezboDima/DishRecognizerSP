@@ -12,13 +12,13 @@ export default function Home() {
 		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
 			<div className="inline-block max-w-lg text-center justify-center">
 				<h1 className={title()}>Welcome to &nbsp;</h1>
-				<h1 className={title({ color: "green" })}>IngredentLens&nbsp;</h1>
+				<h1 className={title({ color: "green" })}>IngredientLens&nbsp;</h1>
 				<br />
 				<h1 className={title()}>
-					use the power of AI to find repcipes based on what you have
+					Use the power of AI to find recipes for dishes you've seen.
 				</h1>
 				<h2 className={subtitle({ class: "mt-4" })}>
-					Cook like a machine
+					Cook like a Machine
 				</h2>
 			</div>
 
