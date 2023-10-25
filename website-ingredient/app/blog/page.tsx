@@ -36,7 +36,6 @@ export default function BlogPage() {
 				/>
 				<input type="submit" value="Upload" />
 			</form>
-			
 		</div>
 	);
 }
