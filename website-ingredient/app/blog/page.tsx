@@ -31,6 +31,7 @@ export default function BlogPage() {
 			<form onSubmit={onSubmit}>
 				<input
 					type="file"
+					accept="image/*"
 					name="file"
 					onChange={(e) => setFile(e.target.files?.[0])}
 				/>
