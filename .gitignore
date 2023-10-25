@@ -1,2 +1,4 @@
 .gitignore
-keys.txt
+/keys.txt
+/package.json
+website-ingredient/node_modules
