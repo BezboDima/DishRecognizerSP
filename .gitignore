@@ -1,2 +1,4 @@
 .gitignore
 keys.txt
+website-ingredient/node_modules/
+website-ingredient/.next/
