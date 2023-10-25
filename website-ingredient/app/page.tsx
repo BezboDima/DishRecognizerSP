@@ -15,7 +15,7 @@ export default function Home() {
 				<h1 className={title({ color: "green" })}>IngredientLens&nbsp;</h1>
 				<br />
 				<h1 className={title()}>
-					Use the power of AI to find recipes for dishes you've seen.
+					Use the power of AI to find recipes for dishes you&apos;ve seen.
 				</h1>
 				<h2 className={subtitle({ class: "mt-4" })}>
 					Cook like a Machine
