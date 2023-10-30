@@ -16,14 +16,14 @@ export default function Home() {
 				<h1 className={title({ color: "green" })}>Ingredient Lens&nbsp;</h1>
 				<br/>
 				<h1 className={title()}>
-					Use the power of AI to find recipes based on what you have
+					Use the power of AI to find recipes based on your food
 				</h1>
 				<h2 className={subtitle({ class: "mt-4" })}>
-					Cook like a Machine
+					Cook Like a Machine
 				</h2>
 			</div>
 
-			<div className="flex gap-3">
+			{/* <div className="flex gap-3">
 				<Link
 					isExternal
 					as={NextLink}
@@ -41,7 +41,7 @@ export default function Home() {
 					<GithubIcon size={20} />
 					GitHub
 				</Link>
-			</div>
+			</div> */}
 
 			
 		</section>
