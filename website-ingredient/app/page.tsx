@@ -18,7 +18,7 @@ export default function Home() {
 					Use the power of AI to find recipes for dishes you&apos;ve seen.
 				</h1>
 				<h2 className={subtitle({ class: "mt-4" })}>
-					Cook like a Machine
+					Cook Like a Machine
 				</h2>
 			</div>
 
