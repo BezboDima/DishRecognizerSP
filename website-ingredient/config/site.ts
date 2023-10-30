@@ -13,11 +13,11 @@ export const siteConfig = {
       href: "/docs",
     },
     {
-      label: "Pricing",
+      label: "Power of AI",
       href: "/pricing",
     },
     {
-      label: "Blog",
+      label: "Image upload",
       href: "/blog",
     },
     {
