@@ -8,21 +8,21 @@ import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 
 import React from "react";
-import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/react";
+
 
 export default function Home() {
 	
 	return (
 		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
 			<div className="inline-block max-w-lg text-center justify-center">
-				<h1 className={title()}>Welcome to&nbsp;</h1>
-				<h1 className={title({ color: "green" })}>Ingredient Lens&nbsp;</h1>
-				<br/>
+				<h1 className={title()}>Welcome to &nbsp;</h1>
+				<h1 className={title({ color: "green" })}>IngredientLens&nbsp;</h1>
+				<br />
 				<h1 className={title()}>
 					Use the power of AI to find recipes for dishes you&apos;ve seen.
 				</h1>
 				<h2 className={subtitle({ class: "mt-4" })}>
-					Cook Like a Machine
+					Cook like a Machine
 				</h2>
 			</div>
 
@@ -35,7 +35,7 @@ export default function Home() {
 				>
 					Use the power of Lens 
 				</Link>
-				{/* <Link
+				<Link
 					isExternal
 					as={NextLink}
 					className={buttonStyles({ variant: "bordered", radius: "full" })}
@@ -43,17 +43,15 @@ export default function Home() {
 				>
 					<GithubIcon size={20} />
 					GitHub
-				</Link> */}
+				</Link>
 			</div>
-			<div>
-				<Card>
-					<CardBody>
-						<p>Make beautiful websites regardless of your design experience.</p>
-					</CardBody>
-				</Card>
-			</div>
+
 			
 		</section>
-		
+	
+	
+	
 	);
+
 }
+
