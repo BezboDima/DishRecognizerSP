@@ -48,7 +48,7 @@ export default function Home() {
 			<div>
 				<Card>
 					<CardBody>
-						<p>Make beautiful websites regardless of your design experience.</p>
+						<p>Get Ready for the Power of AI</p>
 					</CardBody>
 				</Card>
 			</div>
