@@ -7,7 +7,11 @@ import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 
+import React from "react";
+import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/react";
+
 export default function Home() {
+	
 	return (
 		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
 			<div className="inline-block max-w-lg text-center justify-center">
@@ -41,7 +45,15 @@ export default function Home() {
 					GitHub
 				</Link> */}
 			</div>
+			<div>
+				<Card>
+					<CardBody>
+						<p>Make beautiful websites regardless of your design experience.</p>
+					</CardBody>
+				</Card>
+			</div>
 			
 		</section>
+		
 	);
 }
