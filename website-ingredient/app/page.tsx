@@ -48,7 +48,7 @@ export default function Home() {
 			<div>
 				<Card>
 					<CardBody>
-						<p>Get Ready for the Power of AI</p>
+						Get Ready for the Power of AI
 					</CardBody>
 				</Card>
 			</div>

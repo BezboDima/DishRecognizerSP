@@ -29,6 +29,7 @@ export default function BlogPage() {
 	}
 	
 	return (
+		<div className="flex flex-col">
 		<div className="flex flex-row ">
 			<Card>
 				<CardBody>
@@ -46,11 +47,13 @@ export default function BlogPage() {
 				</CardBody>
 			</Card>
 			<Card>	
-				<CardBody> AI Output  </CardBody>
+				<CardBody> AI Output </CardBody>
 			</Card>
-			
 		</div>
-		
+			<Card>	
+				<CardBody> Recipe Output </CardBody>
+			</Card>
+		</div>
 		
 	);
 	
