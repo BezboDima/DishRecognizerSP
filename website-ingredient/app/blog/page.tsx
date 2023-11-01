@@ -1,34 +1,49 @@
 'use client'
+import base64 from 'base-64';
 import { title } from "@/components/primitives";
 import { useState } from 'react'
-
+import { callPostGatewayApi } from '../../requests/request';
 export default function BlogPage() {
 	const [file, setFile] = useState<File>()
-	
+	const [base64, setBase64] = useState<string>();
+
+	function getBase64(file:any) { 
+		return new Promise<any>((resolve, reject) => {
+		  const reader = new FileReader();
+		  reader.readAsDataURL(file);
+		  reader.onload = () => resolve(reader.result);
+		  reader.onerror = error => reject(error);
+		});
+	}
+
 	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		if (!file) return
-
+		//if (!file) return
+		console.log("submitted")
 		try {
-			const data = new FormData()
-			data.set('file', file)
+			const b64 = await getBase64(file)
+			setBase64(b64)
+			var solution = b64.split("base64,")[1];
+			const data = {
+				b_image: solution,
+				bucket: 'examplebucket-8232936',
+				key: 'Media/image3.png',
+			};
+			console.log(data)
+			const res = callPostGatewayApi('upload-image', data)
 
-			const res = await fetch('/API/upload', {
-				method: 'POST',
-				body: data
-			})
-
+			console.log(res)
 			// handle the error
-			if (!res.ok) throw Error(await res.text())
-		} catch (e:any) {
+			//if (!response.ok) throw Error(await response.text())
+		}catch (e:any) {
 			// Handle errors here.
 			console.error(e)
-	}
+		}
 	}
 	
 	return (
 		<div>
-			<form onSubmit={onSubmit}>
+			<form onSubmit={onSubmit} method='post' encType="multipart/form-data">
 				<input
 					type="file"
 					accept="image/*"
