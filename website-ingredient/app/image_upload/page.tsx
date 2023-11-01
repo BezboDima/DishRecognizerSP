@@ -2,7 +2,7 @@
 import { title } from "@/components/primitives";
 import { useState } from 'react'
 
-import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/react";
+import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
 
 export default function BlogPage() {
 	const [file, setFile] = useState<File>()
@@ -29,7 +29,7 @@ export default function BlogPage() {
 	}
 	
 	return (
-		<div>
+		<div className="flex flex-row ">
 			<Card>
 				<CardBody>
 					<div>
@@ -45,6 +45,14 @@ export default function BlogPage() {
 					</div>
 				</CardBody>
 			</Card>
+			<Card>	
+				<CardBody> AI Output  </CardBody>
+			</Card>
+			
 		</div>
+		
+		
 	);
+	
+	
 }
