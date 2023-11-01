@@ -14,11 +14,11 @@ export const siteConfig = {
     },
     {
       label: "Power of AI",
-      href: "/pricing",
+      href: "/power",
     },
     {
-      label: "Image upload",
-      href: "/blog",
+      label: "Image Upload",
+      href: "/image_upload",
     },
     {
       label: "About",
