@@ -8,6 +8,8 @@ import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 import { Card, CardBody } from "@nextui-org/react";
 
+import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/react";
+
 export default function Home() {
 	
 	return (

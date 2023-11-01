@@ -2,6 +2,8 @@
 import { title } from "@/components/primitives";
 import { useState } from 'react'
 
+import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/react";
+
 export default function BlogPage() {
 	const [file, setFile] = useState<File>()
 	
@@ -28,15 +30,21 @@ export default function BlogPage() {
 	
 	return (
 		<div>
-			<form onSubmit={onSubmit}>
-				<input
-					type="file"
-					accept="image/*"
-					name="file"
-					onChange={(e) => setFile(e.target.files?.[0])}
-				/>
-				<input type="submit" value="Upload" />
-			</form>
+			<Card>
+				<CardBody>
+					<div>
+						<form onSubmit={onSubmit}>
+							<input
+								type="file"
+								accept="image/*"
+								name="file"
+								onChange={(e) => setFile(e.target.files?.[0])}
+							/>
+							<input type="submit" value="Upload" />
+						</form>
+					</div>
+				</CardBody>
+			</Card>
 		</div>
 	);
 }
