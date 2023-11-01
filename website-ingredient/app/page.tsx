@@ -29,10 +29,11 @@ export default function Home() {
 				<Link
 					isExternal
 					as={NextLink}
-					href={siteConfig.links.docs}
+					//href={siteConfig.links.docs}
+					href={"/image_upload"}
 					className={buttonStyles({ color: "primary", radius: "full", variant: "shadow" })}
 				>
-					Use the power of Lens 
+					Use the Power of Lens 
 				</Link>
 				{/* <Link
 					isExternal
