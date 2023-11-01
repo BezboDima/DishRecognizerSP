@@ -6,7 +6,6 @@ import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
-
 import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/react";
 
 export default function Home() {
