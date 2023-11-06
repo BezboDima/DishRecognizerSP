@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: "IngredientLens",
-	description: "Make beautiful websites regardless of your design experience.",
+	name: "Ingredient Lens",
+	description: "Find recipes for food you've seen.",
 	navItems: [
 		{
 			label: "Home",
