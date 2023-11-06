@@ -1,6 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError
 import uuid
+import base64
 
 
 def upload_file(event, context):
@@ -13,7 +14,10 @@ def upload_file(event, context):
     """
     # Create a random Id
     random_uuid = uuid.uuid4()
-
+    
+    # Decode the base64-encoded image data to bytes
+    image_bytes = base64.b64decode(event["b_image"], validate=True)
+    
     # Extract the first 8 characters from the UUID
     random_id = str(random_uuid)[:8]
     
@@ -21,7 +25,7 @@ def upload_file(event, context):
     s3_client = boto3.client('s3')
     try:
         response = s3_client.put_object(
-            Body=event["b_image"],
+            Body=image_bytes,
             Bucket=event["bucket"],
             Key=event["key"],
         )

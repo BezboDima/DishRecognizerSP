@@ -3,12 +3,15 @@ import base64 from 'base-64';
 import { title } from "@/components/primitives";
 import { useState } from 'react'
 import { callPostGatewayApi } from '../../requests/request';
-
-import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
+import {Image} from "@nextui-org/image";
+import {Button} from "@nextui-org/button";
+import {Card, CardBody, CardFooter} from "@nextui-org/card";
 
 export default function BlogPage() {
-	const [file, setFile] = useState<File>()
+	const [file, setFile] = useState<File>();
 	const [base64, setBase64] = useState<string>();
+	const [imageVisible, setImageVisible] = useState(false);
+	const [detectButton, setDetectButton] = useState(false);
 
 	function getBase64(file:any) { 
 		return new Promise<any>((resolve, reject) => {
@@ -24,18 +27,20 @@ export default function BlogPage() {
 		//if (!file) return
 		console.log("submitted")
 		try {
-			const b64 = await getBase64(file)
-			setBase64(b64)
+			const b64 = await getBase64(file);
+			setBase64(b64);
 			var solution = b64.split("base64,")[1];
 			const data = {
 				b_image: solution,
 				bucket: 'gereral-bucket',
-				key: 'user-image/image3.png',
+				key: 'user-image/imag.png',
 			};
 			console.log(data)
 			const res = callPostGatewayApi('s3_upload', data)
 
 			console.log(res)
+			setImageVisible(true);
+			setDetectButton(true);
 			// handle the error
 			//if (!response.ok) throw Error(await response.text())
 		}catch (e:any) {
@@ -57,20 +62,28 @@ export default function BlogPage() {
 								name="file"
 								onChange={(e) => setFile(e.target.files?.[0])}
 							/>
-							<input type="submit" value="Upload" />
+							<Button type="submit" size="md">
+								Medium
+							</Button> 
 						</form>
 					</div>
 				</CardBody>
 			</Card>
-			<Card>	
-				<CardBody> AI Output </CardBody>
-			</Card>
 		</div>
+		{file && (<div className="flex flex-row ">
+			<Image
+				width={300}
+				alt="NextUI hero Image"
+				src={URL.createObjectURL(file)}
+			/>
+			<Card>	
+				<CardBody> Detect Ingredients </CardBody>
+			</Card>
+		</div>)}
 			<Card>	
 				<CardBody> Recipe Output </CardBody>
 			</Card>
 		</div>
-		
 	);
 	
 	
