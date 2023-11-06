@@ -33,7 +33,7 @@ export default function BlogPage() {
 				key: 'user-image/image3.png',
 			};
 			console.log(data)
-			const res = callPostGatewayApi('upload-image', data)
+			const res = callPostGatewayApi('s3_upload', data)
 
 			console.log(res)
 			// handle the error
