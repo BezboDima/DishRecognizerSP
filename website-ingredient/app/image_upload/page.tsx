@@ -29,8 +29,8 @@ export default function BlogPage() {
 			var solution = b64.split("base64,")[1];
 			const data = {
 				b_image: solution,
-				bucket: 'examplebucket-8232936',
-				key: 'Media/image3.png',
+				bucket: 'gereral-bucket',
+				key: 'user-image/image3.png',
 			};
 			console.log(data)
 			const res = callPostGatewayApi('upload-image', data)
