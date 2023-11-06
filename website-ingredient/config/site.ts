@@ -13,7 +13,7 @@ export const siteConfig = {
       href: "/docs",
     },
     {
-      label: "Power of AI",
+      label: "Top Common Searched Ingredients",
       href: "/power",
     },
     {
