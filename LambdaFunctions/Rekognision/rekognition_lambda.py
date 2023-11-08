@@ -21,7 +21,7 @@ def detect_labels(image):
      Settings={"GeneralLabels": {"LabelExclusionFilters": ["Food"], "LabelCategoryInclusionFilters":["Food and Beverage"]},
       "ImageProperties": {"MaxDominantColors":10}}
      )
-     return response
+     return response["Labels"]
 
 # --------------- Main handler ------------------
 
