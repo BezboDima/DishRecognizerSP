@@ -38,7 +38,10 @@ export default function BlogPage() {
 			console.log(data)
 			const res = callPostGatewayApi('s3_upload', data)
 
-			console.log(res)
+			const result = callPostGatewayApi('rekognision',data)
+
+
+			console.log(result);
 			setImageVisible(true);
 			setDetectButton(true);
 			// handle the error
@@ -62,9 +65,10 @@ export default function BlogPage() {
 								name="file"
 								onChange={(e) => setFile(e.target.files?.[0])}
 							/>
+							{file && (
 							<Button type="submit" size="md">
-								Medium
-							</Button> 
+								Generate
+							</Button>)}
 						</form>
 					</div>
 				</CardBody>
@@ -72,13 +76,10 @@ export default function BlogPage() {
 		</div>
 		{file && (<div className="flex flex-row ">
 			<Image
-				width={300}
+				width={400}
 				alt="NextUI hero Image"
 				src={URL.createObjectURL(file)}
 			/>
-			<Card>	
-				<CardBody> Detect Ingredients </CardBody>
-			</Card>
 		</div>)}
 			<Card>	
 				<CardBody> Recipe Output </CardBody>
