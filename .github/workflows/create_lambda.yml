@@ -35,6 +35,6 @@ jobs:
           --function-name ${{ github.event.inputs.function-name }} \
           --runtime python3.8 \
           --handler ${{ github.event.inputs.handler }} \
-          --role arn:aws:iam::514157727917:role/gh-create-function \
+          --role arn:aws:iam::058693836484:role/gh-action \
           --zip-file fileb://${{ github.event.inputs.function-name }}.zip
         aws lambda publish-version --function-name ${{ github.event.inputs.function-name }}
