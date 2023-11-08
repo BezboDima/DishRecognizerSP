@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: "IngredientLens",
-	description: "Make beautiful websites regardless of your design experience.",
+	name: "Ingredient Lens",
+	description: "Find recipes for food you've seen.",
 	navItems: [
 		{
 			label: "Home",
@@ -13,12 +13,12 @@ export const siteConfig = {
       href: "/docs",
     },
     {
-      label: "Power of AI",
-      href: "/pricing",
+      label: "Top Common Searched Ingredients",
+      href: "/power",
     },
     {
-      label: "Image upload",
-      href: "/blog",
+      label: "Image Upload",
+      href: "/image_upload",
     },
     {
       label: "About",

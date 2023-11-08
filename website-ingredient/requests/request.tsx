@@ -2,7 +2,7 @@
 export async function callPostGatewayApi(endpoint: string, requestData: any){
 
     try{
-        const response = await fetch(`https://8oit3h86n1.execute-api.us-east-1.amazonaws.com/default/${endpoint}`, 
+        const response = await fetch(`https://2flnmxf7eh.execute-api.us-east-1.amazonaws.com/dev/${endpoint}`, 
         {
             method: 'POST',
             headers: {
