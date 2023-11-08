@@ -11,8 +11,10 @@ client = boto3.client('rekognition')
 
 # --------------- Helper Function to call Rekognition API ------------------
 
-def detect_labels(bucket, key):
-     response = client.detect_labels(Image={'S3Object':{'Bucket':bucket,'Name':key}},
+#def detect_labels(bucket, key):
+def detect_labels(image):
+     #response = client.detect_labels(Image={'S3Object':{'Bucket':bucket,'Name':key}},
+     response = client.detect_labels(Image={image},
      MaxLabels=10,
      # Uncomment to use image properties and filtration settings
      Features=["GENERAL_LABELS", "IMAGE_PROPERTIES"],
