@@ -41,10 +41,21 @@ def lambda_handler(event, context):
         # Calls rekognition DetectLabels API to detect labels in S3 object
         response = detect_labels(image_bytes)
 
+        handled_response = []
+        
+        for elem in list(response):
+            handled_response.append({
+                'name' : elem['Name'],
+                'confidence' : elem['Confidence']
+            })
+            
+            
         # Print response to console.
         print(response)
 
-        return response
+        return {
+            "labels": handled_response
+        }
     
     except Exception as e:
         print(e)
