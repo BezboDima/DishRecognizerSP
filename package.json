@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@nextui-org/react": "^2.1.13",
+    "base-64": "^1.0.0"
+  }
+}
