@@ -38,7 +38,10 @@ export default function BlogPage() {
 			console.log(data)
 			const res = callPostGatewayApi('s3_upload', data)
 
-			console.log(res)
+			const result = callPostGatewayApi('rekognision', data)
+
+
+			console.log(result)
 			setImageVisible(true);
 			setDetectButton(true);
 			// handle the error

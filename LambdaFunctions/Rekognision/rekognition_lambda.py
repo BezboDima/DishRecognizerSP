@@ -14,14 +14,14 @@ client = boto3.client('rekognition')
 #def detect_labels(bucket, key):
 def detect_labels(image):
      #response = client.detect_labels(Image={'S3Object':{'Bucket':bucket,'Name':key}},
-     response = client.detect_labels(Image={image},
+     response = client.detect_labels(Image={'Bytes': image},
      MaxLabels=10,
      # Uncomment to use image properties and filtration settings
      Features=["GENERAL_LABELS", "IMAGE_PROPERTIES"],
      Settings={"GeneralLabels": {"LabelExclusionFilters": ["Food"], "LabelCategoryInclusionFilters":["Food and Beverage"]},
       "ImageProperties": {"MaxDominantColors":10}}
      )
-     return response
+     return response["Labels"]
 
 # --------------- Main handler ------------------
 
@@ -41,10 +41,21 @@ def lambda_handler(event, context):
         # Calls rekognition DetectLabels API to detect labels in S3 object
         response = detect_labels(image_bytes)
 
+        handled_response = []
+        
+        for elem in list(response):
+            handled_response.append({
+                'name' : elem['Name'],
+                'confidence' : elem['Confidence']
+            })
+            
+            
         # Print response to console.
         print(response)
 
-        return response
+        return {
+            "labels": handled_response
+        }
     
     except Exception as e:
         print(e)

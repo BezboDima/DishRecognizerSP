@@ -2,5 +2,3 @@ requests==2.25.1
 boto3==1.28.49
 urllib3==1.26.16
 openai== 0.28.1
-uuid==1.30
-Pillow==10.0.1
