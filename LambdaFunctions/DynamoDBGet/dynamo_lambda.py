@@ -11,9 +11,9 @@ def lambda_handler(event, context):
         
         sha256 = hashlib.sha256()
         sha256.update(event['password'].encode('utf-8'))
-        hashed_password = sha256.hexdigest()
+        hashed_password = sha256.hexdigest() 
         
-        if(hashed_password == responce["Item"]['password']['S']):
+        if(hashed_password == responce["Item"]['password']):
             return {
                 'status' : True
             }
@@ -28,5 +28,5 @@ def lambda_handler(event, context):
         }
         return data
 if __name__ == '__main__':
-    event = {"login" : "me", "password" : "1234"}
+    event = {"login" : "m", "password" : "1234"}
     print(lambda_handler(event, None))

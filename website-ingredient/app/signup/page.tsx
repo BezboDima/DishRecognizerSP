@@ -29,11 +29,12 @@ export default function SignUpPage() {
 
         const response = await callPostGatewayApi("dynamo-put",data);
 
+        console.log(response['exist']);
         if(response['exist']){
-            setIsInfoPassed(true)
-        }else{
             setPasswordsNotMatch(false)
             setIsUserExist(true)
+        }else{
+            setIsInfoPassed(true)
         }
 
     }

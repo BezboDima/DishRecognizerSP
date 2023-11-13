@@ -23,10 +23,10 @@ export default function LoginPage() {
             login: userLogin,
             passsword: userPassword
         }
-        const response = await callPostGatewayApi("dynamo-put",data);
+        const response = await callPostGatewayApi("dynamo-get",data);
 
         if(response['status']){
-            window.location.href = "/"
+            window.location.href = "/docs"
         }else{
             setIsUserDataWrong(true);
         }

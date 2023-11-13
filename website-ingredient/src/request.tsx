@@ -21,6 +21,30 @@ export async function callPostGatewayApi(endpoint: string, requestData: any) {
       throw error; // Re-throw the error to indicate failure
     }
   }
+
+  export async function callPostLambda(requestData: any) {
+    try {
+      const response = await fetch("https://tn5vo4vmykkbbxkwftpyvcut4a0ttgnj.lambda-url.us-east-1.on.aws/", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json(); // Parse the JSON response
+      console.log(data);
+      return data; // Return the parsed JSON data
+    } catch (error) {
+      // Handle any errors that occurred during the API call
+      console.error(error);
+      throw error; // Re-throw the error to indicate failure
+    }
+  }
   
 
 

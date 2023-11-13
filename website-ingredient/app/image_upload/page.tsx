@@ -1,7 +1,7 @@
 'use client'
 import {Listbox, ListboxItem} from "@nextui-org/listbox";
 import { useState } from 'react'
-import { callPostGatewayApi } from '../../src/request';
+import { callPostGatewayApi, callPostLambda } from '../../src/request';
 import {getBase64, getHashKey} from '../../src/generators'
 import {Image} from "@nextui-org/image";
 import {Button} from "@nextui-org/button";
@@ -14,14 +14,29 @@ export default function BlogPage() {
  
 	const handleListItemClick = (key: string) => {
 		setDetectedList((prevList) =>
-      		prevList.map((detectedList) =>
-			  	detectedList.key === key ? { ...detectedList, selected: !detectedList.selected } : detectedList
-      		)
-    	);
+      		prevList.map((detectedList) => ({
+				...detectedList,
+				selected: detectedList.key === key,
+			}))
+		);
 	}
 	const shouldItemBeCrossedOut = (key: string) => {
 		const item = detectedList.find((item) => item.key === key);
   		return item && !item.selected;
+	}
+	const hanldeRecepieClick = () => {
+
+		console.log(detectedList)
+		const selectedKey = detectedList.find((detectedList) => detectedList.selected)?.key;
+
+		console.log(selectedKey)
+		const data = {
+			label: selectedKey
+		}
+
+		const response = callPostLambda(data);
+		console.log(response)
+
 	}
 	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -53,7 +68,7 @@ export default function BlogPage() {
 					var dic = {
 						key: element['name'],
 						label: element['name'],
-						selected: true
+						selected: false
 					}
 					dictionaryArray.push(dic);
 				});
@@ -68,7 +83,6 @@ export default function BlogPage() {
 			console.error(e)
 		}
 	}
-	
 	return (
 		<div className="flex flex-col w-4/5">
 		<div className="flex flex-row ">
@@ -85,7 +99,7 @@ export default function BlogPage() {
 								Generate Labels
 							</Button> 
 							{detectedList.length !== 0 && (
-							<Button type="submit" size="md" onClick={() => alert("recipe")}>
+							<Button size="md" onClick={hanldeRecepieClick}>
 								Generate Recipie
 							</Button> 
 							)}
@@ -106,9 +120,8 @@ export default function BlogPage() {
 				{(item) => (
 				<ListboxItem
 					key={item.key}
-					className={!item.selected ? "text-danger" : ""}
-					color={!item.selected ? "danger" : "default"}
-					style={{ textDecoration: shouldItemBeCrossedOut(item.key) ? 'line-through' : 'none' }}
+					className={item.selected ? "text-success" : ""}
+					color={item.selected ? "success" : "default"}
 				>
 					{item.label}
 				</ListboxItem>

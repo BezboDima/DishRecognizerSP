@@ -17,7 +17,8 @@ def lambda_handler(event, context):
         return {'exist': False}
     except Exception as e:
         print(e)
-        return {'exist': True}
+        return {'exist': True,
+                'error': e}
 
 if __name__ == '__main__':
     event = {"login" : "m", "password" : "1234"}

@@ -1,5 +1,6 @@
 import openai
 import os
+import json
 
 def lambda_handler(event, context):
     # Gets access key from environment variables.
@@ -13,6 +14,14 @@ def lambda_handler(event, context):
     
     # Prints and returns the response in json format.
     print(completion.choices[0].message.content)
-    return {
-        'response': completion.choices[0].message.content
+    response = {
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Content-Type': 'application/json',
+        },
+        'body': json.dumps({ 'response': completion.choices[0].message.content }),
     }
+    return response
