@@ -12,10 +12,12 @@ export default function SignUpPage() {
 
     const [passwordsNotMatch, setPasswordsNotMatch ] = useState(false);
     const [isInfoPassed, setIsInfoPassed] = useState(false);
+    const [isUserExist, setIsUserExist] = useState(false);
 
     const handleSignUpClick = async ()  =>{
 
         if (userConfirmPassword !== userPassword){
+            setIsUserExist(false)
             setPasswordsNotMatch(true)
             return
         }
@@ -25,8 +27,18 @@ export default function SignUpPage() {
             password: userPassword
         }
 
-        const response = await callPostGatewayApi("dynamo-put",data):
+        const response = await callPostGatewayApi("dynamo-put",data);
 
+        if(response['exist']){
+            setIsInfoPassed(true)
+        }else{
+            setPasswordsNotMatch(false)
+            setIsUserExist(true)
+        }
+
+    }
+    const handleLoginClick = () => {
+        window.location.href = "/login"
     }
     const handlePasswordChange = (e : any) => {
         setUserPassword(e.target.value);
@@ -37,15 +49,13 @@ export default function SignUpPage() {
     const handleLoginChange = (e : any) => {
         setUserLogin(e.target.value);
     }
-    const handleLoginClick = () => {
-        window.location.href = "/login"
-    }
 	return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh' }}>
             <Card className="max-w-[600px] min-w-[400px] gap-4">
                 <CardBody className="py-4">
                     <h1>Sign Up to use Lens</h1>
                     {passwordsNotMatch && <h1>Passwords do Not match</h1>}
+                    {isUserExist && <h1>User Exist</h1>}
                     <Input 
                         type="email" 
                         variant="bordered" 

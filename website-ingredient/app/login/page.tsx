@@ -10,14 +10,26 @@ export default function LoginPage() {
     const [userLogin, setUserLogin] = useState("");
     const [userPassword, setUserPassword] = useState("");
 
-    const [isUserDataConfirmed, setIsUserDataCorrect] = useState();
-    const [isUserDataWrond, setIsUserDataWrond] = useState();
+    const [isUserDataWrong, setIsUserDataWrong] = useState(false);
 
     const [isVisible, setIsVisible] = useState(false);
     const toggleVisibility = () => setIsVisible(!isVisible);
 
     const handleSignUpClick = () => {
         window.location.href = "/signup"
+    }
+    const handleLoginClick = async () => {
+        const data = {
+            login: userLogin,
+            passsword: userPassword
+        }
+        const response = await callPostGatewayApi("dynamo-put",data);
+
+        if(response['status']){
+            window.location.href = "/"
+        }else{
+            setIsUserDataWrong(true);
+        }
     }
     const handlePasswordChange = (e : any) => {
         setUserPassword(e.target.value);
@@ -28,9 +40,8 @@ export default function LoginPage() {
 	return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh' }}>
             <Card className="max-w-[600px] min-w-[400px] gap-4">
-                <CardBody className="py-4"> 
-                    {isUserDataConfirmed && (<h1>Successfully loged in</h1>)}
-                    {isUserDataWrond && (<h1>No such user</h1>)}
+                <CardBody className="py-4">
+                    {isUserDataWrong && (<h1>No such user</h1>)}
                     <Input 
                         type="email" 
                         variant="bordered" 
@@ -59,7 +70,7 @@ export default function LoginPage() {
                         <Button color="primary" variant="ghost" size="md" className="grow" onClick={handleSignUpClick}>
                             Sign Up
                         </Button>  
-                        <Button color="primary" variant="solid" size="md" className="grow">
+                        <Button color="primary" variant="solid" size="md" className="grow" onClick={handleLoginClick}>
                             Login
                         </Button>
                     </div>

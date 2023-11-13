@@ -7,7 +7,7 @@ def lambda_handler(event, context):
         table_name = "LoginInfo"
         table = dynamodb.Table(table_name)
         
-        responce = table.get_item(Key={'login':event['login']})
+        responce = table.get_item(Key={'email':event['login']})
         
         sha256 = hashlib.sha256()
         sha256.update(event['password'].encode('utf-8'))

@@ -12,7 +12,7 @@ def lambda_handler(event, context):
         sha256.update(event['password'].encode('utf-8'))
         hashed_password = sha256.hexdigest()
         
-        responce = table.put_item(Item={"login": event['login'], "password":hashed_password}, ConditionExpression="attribute_not_exists(login)")
+        responce = table.put_item(Item={"email": event['login'], "password":hashed_password}, ConditionExpression="attribute_not_exists(login)")
         
         return {'exist': False}
     except Exception as e:
