@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { callPostGatewayApi } from '../../requests/request';
+import { callPostGatewayApi } from '../../src/request';
 import { EyeFilledIcon, EyeSlashFilledIcon } from "@/components/icons";
 import {Card, Input, CardBody, Button} from "@nextui-org/react";
 
@@ -25,8 +25,6 @@ export default function LoginPage() {
     const handleLoginChange = (e : any) => {
         setUserLogin(e.target.value);
     }
-
-
 	return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh' }}>
             <Card className="max-w-[600px] min-w-[400px] gap-4">

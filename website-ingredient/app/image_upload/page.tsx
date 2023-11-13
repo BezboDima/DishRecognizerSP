@@ -1,63 +1,79 @@
 'use client'
-import base64 from 'base-64';
-import { title } from "@/components/primitives";
+import {Listbox, ListboxItem} from "@nextui-org/listbox";
 import { useState } from 'react'
-import { callPostGatewayApi } from '../../requests/request';
+import { callPostGatewayApi } from '../../src/request';
+import {getBase64, getHashKey} from '../../src/generators'
 import {Image} from "@nextui-org/image";
 import {Button} from "@nextui-org/button";
-import {Card, CardBody, CardFooter} from "@nextui-org/card";
+import {Card, CardBody} from "@nextui-org/card";
 
 export default function BlogPage() {
 	const [file, setFile] = useState<File>();
 	const [base64, setBase64] = useState<string>();
-	const [imageVisible, setImageVisible] = useState(false);
-	const [detectButton, setDetectButton] = useState(false);
-
-	function getBase64(file:any) { 
-		return new Promise<any>((resolve, reject) => {
-		  const reader = new FileReader();
-		  reader.readAsDataURL(file);
-		  reader.onload = () => resolve(reader.result);
-		  reader.onerror = error => reject(error);
-		});
+	const [detectedList, setDetectedList] = useState<{ key: string; label: string; selected: boolean; }[]>([]);
+ 
+	const handleListItemClick = (key: string) => {
+		setDetectedList((prevList) =>
+      		prevList.map((detectedList) =>
+			  	detectedList.key === key ? { ...detectedList, selected: !detectedList.selected } : detectedList
+      		)
+    	);
 	}
-
+	const shouldItemBeCrossedOut = (key: string) => {
+		const item = detectedList.find((item) => item.key === key);
+  		return item && !item.selected;
+	}
 	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		//if (!file) return
-		console.log("submitted")
 		try {
 			const b64 = await getBase64(file);
 			setBase64(b64);
-			var solution = b64.split("base64,")[1];
+			const id = getHashKey();
 			const data = {
-				b_image: solution,
+				b_image: b64,
 				bucket: 'gereral-bucket',
-				key: 'user-image/imag.png',
+				key: `user-image/${id}.png`,
 			};
-			console.log(data)
-			const res = callPostGatewayApi('s3_upload', data)
 
-			const result = callPostGatewayApi('rekognision', data)
+			if(!callPostGatewayApi('s3_upload', data)){
+				console.error("Picture wasn't uploaded to s3");
+			}
 
+			callPostGatewayApi('rekognision', data)
+			.then(result => {
 
-			console.log(result)
-			setImageVisible(true);
-			setDetectButton(true);
-			// handle the error
-			//if (!response.ok) throw Error(await response.text())
+				interface DetectList{
+					name:string;
+					confidence:number;
+				}
+				const detected: DetectList[] = result['labels'];
+
+				const dictionaryArray: { key: string, label: string, selected: boolean }[] = [];
+				detected.forEach(element => {
+					var dic = {
+						key: element['name'],
+						label: element['name'],
+						selected: true
+					}
+					dictionaryArray.push(dic);
+				});
+
+				setDetectedList(dictionaryArray);
+			})
+			.catch(error => {
+				console.error(error);
+			});
+
 		}catch (e:any) {
-			// Handle errors here.
 			console.error(e)
 		}
 	}
 	
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col w-4/5">
 		<div className="flex flex-row ">
-			<Card>
-				<CardBody>
-					<div>
+			<Card className="w-full ">
+				<CardBody className="text-center">
 						<form onSubmit={onSubmit} method='post' encType="multipart/form-data">
 							<input
 								type="file"
@@ -66,28 +82,42 @@ export default function BlogPage() {
 								onChange={(e) => setFile(e.target.files?.[0])}
 							/>
 							<Button type="submit" size="md">
-								Medium
+								Generate Labels
 							</Button> 
+							{detectedList.length !== 0 && (
+							<Button type="submit" size="md" onClick={() => alert("recipe")}>
+								Generate Recipie
+							</Button> 
+							)}
 						</form>
-					</div>
 				</CardBody>
 			</Card>
 		</div>
-		{file && (<div className="flex flex-row ">
-			<Image
-				width={300}
+		{file && (<div className="flex">
+			<Image className="w-full" style={{ maxWidth: '100%' }}
 				alt="NextUI hero Image"
 				src={URL.createObjectURL(file)}
 			/>
-			<Card>	
-				<CardBody> Detect Ingredients </CardBody>
-			</Card>
+			<Listbox
+				items={detectedList}
+				aria-label="Dynamic Actions"
+				onAction={(key: React.Key) => handleListItemClick(key as string)}
+			>
+				{(item) => (
+				<ListboxItem
+					key={item.key}
+					className={!item.selected ? "text-danger" : ""}
+					color={!item.selected ? "danger" : "default"}
+					style={{ textDecoration: shouldItemBeCrossedOut(item.key) ? 'line-through' : 'none' }}
+				>
+					{item.label}
+				</ListboxItem>
+				)}
+			</Listbox>
 		</div>)}
 			<Card>	
 				<CardBody> Recipe Output </CardBody>
 			</Card>
 		</div>
 	);
-	
-	
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { callPostGatewayApi } from '../../requests/request';
+import { callPostGatewayApi } from '../../src/request';
 import { EyeFilledIcon, EyeSlashFilledIcon } from "@/components/icons";
 import {Card, Input, CardBody, Button} from "@nextui-org/react";
 
@@ -19,15 +19,13 @@ export default function SignUpPage() {
             setPasswordsNotMatch(true)
             return
         }
-        /*
-        const json = {
-            entry: userInput
+
+        const data = {
+            login: userLogin,
+            password: userPassword
         }
 
-        const response = await callPostGatewayApi("test", json);
-
-        setUserData(response.event);
-        setUserDataVisibility(true);*/
+        const response = await callPostGatewayApi("dynamo-put",data):
 
     }
     const handlePasswordChange = (e : any) => {

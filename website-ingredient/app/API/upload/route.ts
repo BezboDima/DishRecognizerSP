@@ -1,7 +1,7 @@
 import { writeFile } from 'fs/promises'
 import { NextRequest, NextResponse } from 'next/server'
 import { join } from 'path'
-import { callPostGatewayApi } from '../../../requests/request';
+import { callPostGatewayApi } from '../../../src/request';
 
 export async function POST(request: NextRequest) {
     const data = await request.formData()
