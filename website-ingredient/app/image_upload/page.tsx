@@ -6,11 +6,17 @@ import {getBase64, getHashKey} from '../../src/generators'
 import {Image} from "@nextui-org/image";
 import {Button} from "@nextui-org/button";
 import {Card, CardBody} from "@nextui-org/card";
-
+import {Accordion, AccordionItem} from "@nextui-org/accordion";
+import { Progress } from "@nextui-org/progress";
+import { Table, TableBody, TableHeader, TableColumn, TableRow, TableCell } from "@nextui-org/table";
+ 
 export default function BlogPage() {
 	const [file, setFile] = useState<File>();
 	const [base64, setBase64] = useState<string>();
 	const [detectedList, setDetectedList] = useState<{ key: string; label: string; selected: boolean; }[]>([]);
+	const [stepsList, setStepsList] = useState<{ number: number; description: string; }[]>([]);
+	const [ingredientList, setIngredientList] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
  
 	const handleListItemClick = (key: string) => {
 		setDetectedList((prevList) =>
@@ -20,21 +26,26 @@ export default function BlogPage() {
 			}))
 		);
 	}
-	const shouldItemBeCrossedOut = (key: string) => {
-		const item = detectedList.find((item) => item.key === key);
-  		return item && !item.selected;
-	}
 	const hanldeRecepieClick = () => {
 
+		setIsLoading(true);
 		console.log(detectedList);
 		const selectedKey = detectedList.find((detectedList) => detectedList.selected)?.key;
 
 		console.log(selectedKey);
-		const d = {
+		const data = {
 			label: selectedKey,
 		};
 
-		const response = callPostLambda(d);
+		const response = callPostLambda(data)
+		.then(result=> {
+			setStepsList(result['steps']);
+			setIngredientList(result['ingredients']);
+			setIsLoading(false);
+		})
+		.catch(error => {
+			console.error(error);
+		});
 		console.log(response)
 
 	}
@@ -88,22 +99,22 @@ export default function BlogPage() {
 		<div className="flex flex-row ">
 			<Card className="w-full ">
 				<CardBody className="text-center">
-						<form onSubmit={onSubmit} method='post' encType="multipart/form-data">
-							<input
-								type="file"
-								accept="image/*"
-								name="file"
-								onChange={(e) => setFile(e.target.files?.[0])}
-							/>
-							<Button type="submit" size="md">
-								Generate Labels
-							</Button> 
-							{detectedList.length !== 0 && (
-							<Button size="md" onClick={hanldeRecepieClick}>
-								Generate Recipie
-							</Button> 
-							)}
-						</form>
+					<form onSubmit={onSubmit} method='post' encType="multipart/form-data">
+						<input
+							type="file"
+							accept="image/*"
+							name="file"
+							onChange={(e) => setFile(e.target.files?.[0])}
+						/>
+						<Button type="submit" size="md">
+							Generate Labels
+						</Button> 
+						{detectedList.length !== 0 && (
+						<Button size="md" onClick={hanldeRecepieClick}>
+							Generate Recipie
+						</Button> 
+						)}
+					</form>
 				</CardBody>
 			</Card>
 		</div>
@@ -128,9 +139,40 @@ export default function BlogPage() {
 				)}
 			</Listbox>
 		</div>)}
-			<Card>	
-				<CardBody> Recipe Output </CardBody>
-			</Card>
+		<Card>	
+			<CardBody> Recipe Output
+				{isLoading && 
+				(<Progress
+					size="sm"
+					isIndeterminate
+					aria-label="Loading..."
+					className="max-w-md"
+				/>)}
+				{ingredientList.length != 0 &&
+				(<div>
+					<Table aria-label="Example table with dynamic content">
+						<TableHeader>
+							<TableColumn key="ingredients">ingredients</TableColumn>
+						</TableHeader>
+						<TableBody>
+							{ingredientList.map((item) =>
+							<TableRow key={item}>
+								<TableCell>{item}</TableCell>
+							</TableRow>
+							)}
+						</TableBody>
+					</Table>
+				</div>)}
+				{stepsList.length != 0 &&
+				(<Accordion>
+					{stepsList.map((item) => (
+						<AccordionItem key={item.number} aria-label={`Step ${item.number}`} title={`Step ${item.number}`}>
+						{item.description}
+						</AccordionItem>
+					))}
+				</Accordion>)}
+			</CardBody>
+		</Card>
 		</div>
 	);
 }

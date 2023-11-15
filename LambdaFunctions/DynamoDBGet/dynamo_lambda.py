@@ -10,9 +10,13 @@ def lambda_handler(event, context):
         
         responce = table.get_item(Key={'email':event['login']})
         
+        print(responce)
+        print(responce["Item"])
+        print(responce["Item"]['password'])
+        
         sha256 = hashlib.sha256()
         sha256.update(event['password'].encode('utf-8'))
-        hashed_password = sha256.hexdigest() 
+        hashed_password = sha256.hexdigest()
         
         if(hashed_password == responce["Item"]['password']):
             resp = {
@@ -25,6 +29,7 @@ def lambda_handler(event, context):
             
         return json.loads(json.dumps(resp))
     except Exception as e:
+        
         data = {
             'status' : False,
             'error' : e

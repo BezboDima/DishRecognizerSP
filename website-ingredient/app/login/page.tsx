@@ -21,15 +21,21 @@ export default function LoginPage() {
     const handleLoginClick = async () => {
         const data = {
             login: userLogin,
-            passsword: userPassword
+            password: userPassword
         }
-        const response = await callPostGatewayApi("dynamo-get",data);
+        callPostGatewayApi("dynamo-get",data)
+        .then(response => {
 
-        if(response['status']){
-            window.location.href = "/docs"
-        }else{
-            setIsUserDataWrong(true);
-        }
+            if(response['status']){
+                window.location.href = "/docs"
+            }else{
+                setIsUserDataWrong(true);
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
     }
     const handlePasswordChange = (e : any) => {
         setUserPassword(e.target.value);
