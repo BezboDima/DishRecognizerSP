@@ -14,7 +14,7 @@ export default function DocsPage() {
 			<br></br>
 			
 			<div className="gap-2 grid grid-cols-3 grid-rows-2 px-1">
-				<Card className="w-full col-span-2">
+				<Card className="w-full h-[300px] col-span-2">
 					<CardHeader className="absolute z-10 top-1 flex-col !items-start">
 						<p className="text-tiny text-white/60 uppercase font-bold">How It's Done</p>
 						<h4 className="text-white font-medium text-large">Made Possible by ChatGPT</h4>
@@ -27,7 +27,7 @@ export default function DocsPage() {
 					/>
 				</Card>
 
-				<Card>
+				<Card className="w-full h-[300px]">
 					<CardHeader className="absolute z-10 top-1 flex-col !items-start">
 						<p className="text-tiny text-white/60 uppercase font-bold">Plant a tree</p>
 						<h4 className="text-white font-medium text-large">Contribute to the planet</h4>
@@ -40,7 +40,7 @@ export default function DocsPage() {
 					/>
 				</Card>
 
-				<Card>
+				<Card className="w-full h-[300px]">
 					<CardHeader className="absolute z-10 top-1 flex-col !items-start">
 						<p className="text-tiny text-white/60 uppercase font-bold">Supercharged</p>
 						<h4 className="text-white font-medium text-large">Creates beauty like a beast</h4>
@@ -53,7 +53,7 @@ export default function DocsPage() {
 					/>
 				</Card>
 				
-				<Card className="py-4">
+				<Card className="w-full h-[300px]">
       				<CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
 						<p className="text-tiny uppercase font-bold">Daily Mix</p>
 						<small className="text-default-500">12 Tracks</small>
@@ -69,7 +69,7 @@ export default function DocsPage() {
 					</CardBody>
     			</Card>
 
-				<Card>
+				<Card className="w-full h-[300px]">
 
 				</Card>
 			</div>
