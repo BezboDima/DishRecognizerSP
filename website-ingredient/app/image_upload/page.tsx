@@ -26,15 +26,15 @@ export default function BlogPage() {
 	}
 	const hanldeRecepieClick = () => {
 
-		console.log(detectedList)
+		console.log(detectedList);
 		const selectedKey = detectedList.find((detectedList) => detectedList.selected)?.key;
 
-		console.log(selectedKey)
-		const data = {
-			label: selectedKey
-		}
+		console.log(selectedKey);
+		const d = {
+			label: selectedKey,
+		};
 
-		const response = callPostLambda(data);
+		const response = callPostLambda(d);
 		console.log(response)
 
 	}

@@ -24,11 +24,14 @@ export async function callPostGatewayApi(endpoint: string, requestData: any) {
 
   export async function callPostLambda(requestData: any) {
     try {
-      const response = await fetch("https://tn5vo4vmykkbbxkwftpyvcut4a0ttgnj.lambda-url.us-east-1.on.aws/", {
+      const headers = {'Access-Control-Allow-Origin': '*', // Specify your client's origin
+                      'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+                      'Access-Control-Allow-Headers': 'Content-Type',
+                      'Content-Type': 'application/json',
+                    }
+
+      const response = await fetch("https://x2l5y4bencpai3y6bv73ml7aky0qhxzu.lambda-url.us-east-1.on.aws/", {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify(requestData),
       });
   
