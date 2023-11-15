@@ -1,5 +1,6 @@
 import boto3
 import hashlib
+import json
 def lambda_handler(event, context):
     
     try:
@@ -14,19 +15,21 @@ def lambda_handler(event, context):
         hashed_password = sha256.hexdigest() 
         
         if(hashed_password == responce["Item"]['password']):
-            return {
+            resp = {
                 'status' : True
             }
         else:
-            return {
+            resp = {
                 'status' : False
             }
+            
+        return json.loads(json.dumps(resp))
     except Exception as e:
         data = {
             'status' : False,
             'error' : e
         }
-        return data
+        return json.loads(json.dumps(data))
 if __name__ == '__main__':
-    event = {"login" : "m", "password" : "1234"}
+    event = {"login" : "bezbo", "password" : "bb"}
     print(lambda_handler(event, None))
