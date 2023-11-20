@@ -1,100 +1,96 @@
 'use client'
-import {Listbox, ListboxItem} from "@nextui-org/listbox";
+import { Listbox, ListboxItem } from '@nextui-org/listbox'
 import { useState } from 'react'
-import { callPostGatewayApi, callPostLambda } from '../../src/request';
-import {getBase64, getHashKey} from '../../src/generators'
-import {Image} from "@nextui-org/image";
-import {Button} from "@nextui-org/button";
-import {Card, CardBody} from "@nextui-org/card";
-import {Accordion, AccordionItem} from "@nextui-org/accordion";
-import { Progress } from "@nextui-org/progress";
-import { Table, TableBody, TableHeader, TableColumn, TableRow, TableCell } from "@nextui-org/table";
- 
-export default function BlogPage() {
-	const [file, setFile] = useState<File>();
-	const [base64, setBase64] = useState<string>();
-	const [detectedList, setDetectedList] = useState<{ key: string; label: string; selected: boolean; }[]>([]);
-	const [stepsList, setStepsList] = useState<{ number: number; description: string; }[]>([]);
-	const [ingredientList, setIngredientList] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
- 
-	const handleListItemClick = (key: string) => {
-		setDetectedList((prevList) =>
+import { callPostGatewayApi, callPostLambda } from '../../src/request'
+import { getBase64, getHashKey } from '../../src/generators'
+import { Image } from '@nextui-org/image'
+import { Button } from '@nextui-org/button'
+import { Card, CardBody } from '@nextui-org/card'
+import { Accordion, AccordionItem } from '@nextui-org/accordion'
+import { Progress } from '@nextui-org/progress'
+import { Table, TableBody, TableHeader, TableColumn, TableRow, TableCell } from '@nextui-org/table'
+
+export default function BlogPage () {
+  const [file, setFile] = useState<File>()
+  const [base64, setBase64] = useState<string>()
+  const [detectedList, setDetectedList] = useState<Array<{ key: string, label: string, selected: boolean }>>([])
+  const [stepsList, setStepsList] = useState<Array<{ number: number, description: string }>>([])
+  const [ingredientList, setIngredientList] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleListItemClick = (key: string) => {
+    setDetectedList((prevList) =>
       		prevList.map((detectedList) => ({
-				...detectedList,
-				selected: detectedList.key === key,
-			}))
-		);
-	}
-	const hanldeRecepieClick = () => {
+        ...detectedList,
+        selected: detectedList.key === key
+      }))
+    )
+  }
+  const hanldeRecepieClick = () => {
+    setIsLoading(true)
+    console.log(detectedList)
+    const selectedKey = detectedList.find((detectedList) => detectedList.selected)?.key
 
-		setIsLoading(true);
-		console.log(detectedList);
-		const selectedKey = detectedList.find((detectedList) => detectedList.selected)?.key;
+    console.log(selectedKey)
+    const data = {
+      label: selectedKey
+    }
 
-		console.log(selectedKey);
-		const data = {
-			label: selectedKey,
-		};
+    const response = callPostLambda(data)
+      .then(result => {
+        setStepsList(result.steps)
+        setIngredientList(result.ingredients)
+        setIsLoading(false)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    console.log(response)
+  }
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      const b64 = await getBase64(file)
+      setBase64(b64)
+      const id = getHashKey()
+      const data = {
+        b_image: b64,
+        bucket: 'gereral-bucket',
+        key: `user-image/${id}.png`
+      }
 
-		const response = callPostLambda(data)
-		.then(result=> {
-			setStepsList(result['steps']);
-			setIngredientList(result['ingredients']);
-			setIsLoading(false);
-		})
-		.catch(error => {
-			console.error(error);
-		});
-		console.log(response)
+      if (!callPostGatewayApi('s3_upload', data)) {
+        console.error("Picture wasn't uploaded to s3")
+      }
 
-	}
-	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		try {
-			const b64 = await getBase64(file);
-			setBase64(b64);
-			const id = getHashKey();
-			const data = {
-				b_image: b64,
-				bucket: 'gereral-bucket',
-				key: `user-image/${id}.png`,
-			};
+      callPostGatewayApi('rekognision', data)
+        .then(result => {
+          interface DetectList {
+            name: string
+            confidence: number
+          }
+          const detected: DetectList[] = result.labels
 
-			if(!callPostGatewayApi('s3_upload', data)){
-				console.error("Picture wasn't uploaded to s3");
-			}
+          const dictionaryArray: Array<{ key: string, label: string, selected: boolean }> = []
+          detected.forEach(element => {
+            const dic = {
+              key: element.name,
+              label: element.name,
+              selected: false
+            }
+            dictionaryArray.push(dic)
+          })
 
-			callPostGatewayApi('rekognision', data)
-			.then(result => {
-
-				interface DetectList{
-					name:string;
-					confidence:number;
-				}
-				const detected: DetectList[] = result['labels'];
-
-				const dictionaryArray: { key: string, label: string, selected: boolean }[] = [];
-				detected.forEach(element => {
-					var dic = {
-						key: element['name'],
-						label: element['name'],
-						selected: false
-					}
-					dictionaryArray.push(dic);
-				});
-
-				setDetectedList(dictionaryArray);
-			})
-			.catch(error => {
-				console.error(error);
-			});
-
-		}catch (e:any) {
-			console.error(e)
-		}
-	}
-	return (
+          setDetectedList(dictionaryArray)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    } catch (e: any) {
+      console.error(e)
+    }
+  }
+  return (
 		<div className="flex flex-col w-4/5">
 		<div className="flex flex-row ">
 			<Card className="w-full ">
@@ -104,15 +100,15 @@ export default function BlogPage() {
 							type="file"
 							accept="image/*"
 							name="file"
-							onChange={(e) => setFile(e.target.files?.[0])}
+							onChange={(e) => { setFile(e.target.files?.[0]) }}
 						/>
 						<Button type="submit" size="md">
 							Generate Labels
-						</Button> 
+						</Button>
 						{detectedList.length !== 0 && (
 						<Button size="md" onClick={hanldeRecepieClick}>
 							Generate Recipie
-						</Button> 
+						</Button>
 						)}
 					</form>
 				</CardBody>
@@ -126,22 +122,22 @@ export default function BlogPage() {
 			<Listbox
 				items={detectedList}
 				aria-label="Dynamic Actions"
-				onAction={(key: React.Key) => handleListItemClick(key as string)}
+				onAction={(key: React.Key) => { handleListItemClick(key as string) }}
 			>
 				{(item) => (
 				<ListboxItem
 					key={item.key}
-					className={item.selected ? "text-success" : ""}
-					color={item.selected ? "success" : "default"}
+					className={item.selected ? 'text-success' : ''}
+					color={item.selected ? 'success' : 'default'}
 				>
 					{item.label}
 				</ListboxItem>
 				)}
 			</Listbox>
 		</div>)}
-		<Card>	
+		<Card>
 			<CardBody> Recipe Output
-				{isLoading && 
+				{isLoading &&
 				(<Progress
 					size="sm"
 					isIndeterminate
@@ -174,5 +170,5 @@ export default function BlogPage() {
 			</CardBody>
 		</Card>
 		</div>
-	);
+  )
 }

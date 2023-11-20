@@ -16,7 +16,7 @@ export default function DocsPage() {
 			<div className="gap-2 grid grid-cols-3 grid-rows-2 px-1">
 				<Card className="w-full h-[300px] col-span-2">
 					<CardHeader className="absolute z-10 top-1 flex-col !items-start">
-						<p className="text-tiny text-white/60 uppercase font-bold">How It's Done</p>
+						<p className="text-tiny text-white/60 uppercase font-bold">How Its Done</p>
 						<h4 className="text-white font-medium text-large">Made Possible by ChatGPT</h4>
 					</CardHeader>
 					<Image
