@@ -107,7 +107,7 @@ export default function ImageUpload() {
 						</Button>
 						{detectedList.length !== 0 && (
 						<Button size="md" onClick={handleRecipeClick}>
-							Generate Recipie
+							Generate Recipe
 						</Button>
 						)}
 					</form>
