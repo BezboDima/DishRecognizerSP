@@ -10,7 +10,7 @@ import { Accordion, AccordionItem } from '@nextui-org/accordion'
 import { Progress } from '@nextui-org/progress'
 import { Table, TableBody, TableHeader, TableColumn, TableRow, TableCell } from '@nextui-org/table'
 
-export default function ImageUpload () {
+export default function ImageUpload() {
   const [file, setFile] = useState<File>()
   const [base64, setBase64] = useState<string>()
   const [detectedList, setDetectedList] = useState<Array<{ key: string, label: string, selected: boolean }>>([])
@@ -20,7 +20,7 @@ export default function ImageUpload () {
 
   const handleListItemClick = (key: string) => {
     setDetectedList((prevList) =>
-      		prevList.map((detectedList) => ({
+      prevList.map((detectedList) => ({
         ...detectedList,
         selected: detectedList.key === key
       }))
