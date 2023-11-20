@@ -26,7 +26,7 @@ export default function BlogPage () {
       }))
     )
   }
-  const hanldeRecepieClick = () => {
+  const handleRecipeClick = () => {
     setIsLoading(true)
     console.log(detectedList)
     const selectedKey = detectedList.find((detectedList) => detectedList.selected)?.key
@@ -106,8 +106,8 @@ export default function BlogPage () {
 							Generate Labels
 						</Button>
 						{detectedList.length !== 0 && (
-						<Button size="md" onClick={hanldeRecepieClick}>
-							Generate Recipie
+						<Button size="md" onClick={handleRecipeClick}>
+							Generate Recipe
 						</Button>
 						)}
 					</form>
@@ -115,7 +115,7 @@ export default function BlogPage () {
 			</Card>
 		</div>
 		{file && (<div className="flex">
-			<Image className="w-full" style={{ maxWidth: '100%' }}
+			<Image className="w-[300px]" style={{ maxWidth: '100%' }}
 				alt="NextUI hero Image"
 				src={URL.createObjectURL(file)}
 			/>
