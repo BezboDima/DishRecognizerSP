@@ -106,8 +106,8 @@ export default function ImageUpload () {
 							Generate Labels
 						</Button>
 						{detectedList.length !== 0 && (
-						<Button size="md" onClick={hanldeRecepieClick}>
-							Generate Recipie
+						<Button size="md" onClick={handleRecipeClick}>
+							Generate Recipe
 						</Button>
 						)}
 					</form>
