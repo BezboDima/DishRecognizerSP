@@ -48,38 +48,44 @@ export default function DocsPage() {
 
 				<Card className="w-full h-[300px]">
 					<CardHeader className="absolute z-10 top-1 flex-col !items-start">
-						<p className="text-tiny text-white/60 uppercase font-bold">Supercharged</p>
-						<h4 className="text-white font-medium text-large">Creates beauty like a beast</h4>
+						<p className="text-tiny text-white/60 uppercase font-bold">Backend Power</p>
+						<h4 className="text-white font-medium text-large">Built using AWS</h4>
 					</CardHeader>
 					<Image
 						removeWrapper
 						alt="Card background"
 						className="z-0 w-full h-full object-cover"
-						src=""
+						src="aws.jpg"
 					/>
 				</Card>
 				
-				<Card className="w-full h-[300px]">
-      				<CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-						<p className="text-tiny uppercase font-bold">Daily Mix</p>
-						<small className="text-default-500">12 Tracks</small>
-						<h4 className="font-bold text-large">Frontend Radio</h4>
+				<Card className="w-full h-[300px] col-span-2">
+					<CardHeader className="absolute z-10 top-1 flex-col !items-start">
+						<p className="text-tiny text-white/60 uppercase font-bold">Beauty By Design</p>
+						<h4 className="text-white font-medium text-large">Built using NextUI, Next.js and Tailwind CSS</h4>
 					</CardHeader>
-					<CardBody className="overflow-visible py-2">
-						<Image
+					<Image
+						removeWrapper
 						alt="Card background"
-						className="object-cover rounded-xl"
-						src="apple.png"
-						width={270}
-						/>
-					</CardBody>
+						className="z-0 w-full h-full object-cover"
+						src="nextui.png"
+					/>
     			</Card>
+
+				<Card className="w-[0px] h-[300px]">
+				</Card>
 
 				<Card className="w-full h-[300px]">
 					<CardHeader className="absolute z-10 top-1 flex-col !items-start">
 						<p className="text-tiny text-white/60 uppercase font-bold">For More Information</p>
 						<h4 className="text-white font-medium text-large">View the About page</h4>
 					</CardHeader>
+					<Image
+						removeWrapper
+						alt="Card background"
+						className="z-0 w-full h-full object-cover"
+						src="mu_logo.png"
+					/>
 				</Card>
 			</div>
 	  </div>

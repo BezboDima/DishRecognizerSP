@@ -21,6 +21,9 @@ export default function AboutPage() {
 			<p>
 				Our mission is to provide high-quality products and services to our customers. We are committed to continuous improvement and strive to exceed our customers&apos; expectations.
 			</p>
+			<br></br>
+			<p>Monmouth University</p>
+			<p>Fall 2023 - Spring 2024</p>
 		</div>
 	);
 }
