@@ -10,7 +10,7 @@ import { Accordion, AccordionItem } from '@nextui-org/accordion'
 import { Progress } from '@nextui-org/progress'
 import { Table, TableBody, TableHeader, TableColumn, TableRow, TableCell } from '@nextui-org/table'
 
-export default function BlogPage () {
+export default function ImageUpload () {
   const [file, setFile] = useState<File>()
   const [base64, setBase64] = useState<string>()
   const [detectedList, setDetectedList] = useState<Array<{ key: string, label: string, selected: boolean }>>([])
@@ -107,7 +107,7 @@ export default function BlogPage () {
 						</Button>
 						{detectedList.length !== 0 && (
 						<Button size="md" onClick={hanldeRecepieClick}>
-							Generate Recipie
+							Generate Recipe
 						</Button>
 						)}
 					</form>
@@ -148,7 +148,7 @@ export default function BlogPage () {
 				(<div>
 					<Table aria-label="Example table with dynamic content">
 						<TableHeader>
-							<TableColumn key="ingredients">ingredients</TableColumn>
+							<TableColumn key="ingredients">Ingredients</TableColumn>
 						</TableHeader>
 						<TableBody>
 							{ingredientList.map((item) =>
