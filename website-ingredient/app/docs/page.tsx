@@ -17,11 +17,11 @@ export default function DocsPage() {
 				<Card className="w-full h-[300px] col-span-2">
 					<CardHeader className="absolute z-10 top-1 flex-col !items-start">
 						<p className="text-tiny text-white/60 uppercase font-bold">How to Use</p>
-						<h4 className="text-white font-medium text-large">1. Click "Image Upload" above</h4>
+						<h4 className="text-white font-medium text-large">1. Click &quot;Image Upload0&quot; above</h4>
 						<h4 className="text-white font-medium text-large">2. Upload an image of food</h4>
-						<h4 className="text-white font-medium text-large">3. Click "Generate Labels"</h4>
+						<h4 className="text-white font-medium text-large">3. Click &quot;Generate Labels&quot;</h4>
 						<h4 className="text-white font-medium text-large">4. Choose what food to make</h4>
-						<h4 className="text-white font-medium text-large">5. Click "Generate Recipes"</h4>
+						<h4 className="text-white font-medium text-large">5. Click &quot;Generate Recipes&quot;</h4>
 						<h4 className="text-white font-medium text-large">6. Enjoy your recipe!</h4>
 						<h4 className="text-white font-medium text-large">7. Repeat the process for a new recipe</h4>
 					</CardHeader>
