@@ -49,7 +49,7 @@ export default function DocsPage() {
 				<Card className="w-full h-[300px]">
 					<CardHeader className="absolute z-10 top-1 flex-col !items-start">
 						<p className="text-tiny text-white/60 uppercase font-bold">Backend Power</p>
-						<h4 className="text-white font-medium text-large">Built using AWS</h4>
+						<h4 className="text-white font-medium text-large">Powered by AWS</h4>
 					</CardHeader>
 					<Image
 						removeWrapper
