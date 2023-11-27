@@ -29,7 +29,6 @@ export default function Home() {
 				<Link
 					isExternal
 					as={NextLink}
-					//href={siteConfig.links.docs}
 					href={"/image_upload"}
 					className={buttonStyles({ color: "primary", radius: "full", variant: "shadow" })}
 				>
@@ -45,13 +44,14 @@ export default function Home() {
 					GitHub
 				</Link> */}
 			</div>
-			<div>
+
+			{/* <div>
 				<Card>
 					<CardBody>
 						Get Ready for the Power of AI
 					</CardBody>
 				</Card>
-			</div>
+			</div> */}
 			
 		</section>
 		
