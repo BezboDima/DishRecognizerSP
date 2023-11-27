@@ -44,14 +44,6 @@ export default function Home() {
 					GitHub
 				</Link> */}
 			</div>
-
-			{/* <div>
-				<Card>
-					<CardBody>
-						Get Ready for the Power of AI
-					</CardBody>
-				</Card>
-			</div> */}
 			
 		</section>
 		
