@@ -13,7 +13,7 @@ export const siteConfig = {
       href: "/docs",
     },
     {
-      label: "Top Common Searched Ingredients",
+      label: "Popular Dishes",
       href: "/power",
     },
     {
