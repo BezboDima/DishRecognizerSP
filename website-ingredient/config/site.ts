@@ -14,7 +14,7 @@ export const siteConfig = {
     },
     {
       label: "Popular Dishes",
-      href: "/power",
+      href: "/popular",
     },
     {
       label: "Image Upload",

@@ -1,7 +1,7 @@
 'use client'
 import { title } from "@/components/primitives";
 import React from "react";
-import {Card, CardHeader, CardBody, CardFooter, Image, Button} from "@nextui-org/react";
+import {Card, CardHeader, CardBody, CardFooter, Image, Button, Link } from "@nextui-org/react";
 
 export default function PopularDishes() {
 	
@@ -15,6 +15,18 @@ export default function PopularDishes() {
 		img: "salad.jpg",
 		},
 		{
+		title: "Fruit",
+		img: "fruit.jpg",
+		},
+		{
+		title: "Vegetables",
+		img: "vegetables.jpg",
+		},
+		{
+		title: "Sandwich",
+		img: "sandwich.jpg",
+		},
+		{
 		title: "Hamburger",
 		img: "hamburger.jpg",
 		},
@@ -23,20 +35,24 @@ export default function PopularDishes() {
 		img: "pizza.jpg",
 		},
 		{
+		title: "Pasta",
+		img: "pasta.png",
+		},
+		{
 		title: "Seafood",
-		img: "/images/fruit-5.jpeg",
+		img: "seafood.jpg",
 		},
 		{
 		title: "Steak",
-		img: "/images/fruit-6.jpeg",
+		img: "steak.png",
 		},
 		{
 		title: "Ice Cream",
-		img: "/images/fruit-7.jpeg",
+		img: "icecream.jpg",
 		},
 		{
 		title: "Cake",
-		img: "/images/fruit-8.jpeg",
+		img: "cake.png",
 		},
 	];
 
