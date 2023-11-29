@@ -18,7 +18,7 @@ def detect_labels(image):
      MaxLabels=10,
      # Uncomment to use image properties and filtration settings
      Features=["GENERAL_LABELS", "IMAGE_PROPERTIES"],
-     Settings={"GeneralLabels": {"LabelExclusionFilters": ["Food"], "LabelCategoryInclusionFilters":["Food and Beverage"]},
+     Settings={"GeneralLabels": {"LabelExclusionFilters": ["Food", "Dinner", "Lunch", "Meat", "Meal", "Snack", "Beverage"], "LabelCategoryInclusionFilters":["Food and Beverage"]},
       "ImageProperties": {"MaxDominantColors":10}}
      )
      return response["Labels"]
