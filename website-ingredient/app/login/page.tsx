@@ -27,6 +27,8 @@ export default function LoginPage() {
         .then(response => {
 
             if(response['status']){
+                var token = userLogin
+                document.cookie = `login=${token}; path=/`
                 window.location.href = "/docs"
             }else{
                 setIsUserDataWrong(true);

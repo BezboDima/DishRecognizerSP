@@ -3,7 +3,6 @@ from botocore.exceptions import ClientError
 import uuid
 import base64
 
-
 def upload_file(event, context):
     """Upload a file to an S3 bucket
 
@@ -29,6 +28,6 @@ def upload_file(event, context):
             Bucket=event["bucket"],
             Key=event["key"],
         )
+        return True
     except ClientError as e:
         return False
-    return True

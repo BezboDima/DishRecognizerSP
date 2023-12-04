@@ -10,21 +10,29 @@ import { Accordion, AccordionItem } from '@nextui-org/accordion'
 import { Progress } from '@nextui-org/progress'
 import { Table, TableBody, TableHeader, TableColumn, TableRow, TableCell } from '@nextui-org/table'
 
-export default function ImageUpload () {
+export default function ImageUpload() {
   const [file, setFile] = useState<File>()
   const [base64, setBase64] = useState<string>()
   const [detectedList, setDetectedList] = useState<Array<{ key: string, label: string, selected: boolean }>>([])
   const [stepsList, setStepsList] = useState<Array<{ number: number, description: string }>>([])
   const [ingredientList, setIngredientList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isChosen, setIsChosen] = useState(false);
+  const [isRecipe, setIsRecipe] = useState(false);
 
   const handleListItemClick = (key: string) => {
     setDetectedList((prevList) =>
-      		prevList.map((detectedList) => ({
+      prevList.map((detectedList) => ({
         ...detectedList,
         selected: detectedList.key === key
       }))
     )
+	setIsChosen(true);
+  }
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+	setFile(e.target.files?.[0]);
+	setDetectedList([]);
+	setIsChosen(false);
   }
   const handleRecipeClick = () => {
     setIsLoading(true)
@@ -92,7 +100,7 @@ export default function ImageUpload () {
   }
   return (
 		<div className="flex flex-col w-4/5">
-		<div className="flex flex-row ">
+		<div className="flex flex-row">
 			<Card className="w-full ">
 				<CardBody className="text-center">
 					<form onSubmit={onSubmit} method='post' encType="multipart/form-data">
@@ -100,12 +108,12 @@ export default function ImageUpload () {
 							type="file"
 							accept="image/*"
 							name="file"
-							onChange={(e) => { setFile(e.target.files?.[0]) }}
+							onChange={(e) => { handleImageUpload(e) }}
 						/>
 						<Button type="submit" size="md">
 							Generate Labels
 						</Button>
-						{detectedList.length !== 0 && (
+						{isChosen && (
 						<Button size="md" onClick={handleRecipeClick}>
 							Generate Recipe
 						</Button>
@@ -114,9 +122,13 @@ export default function ImageUpload () {
 				</CardBody>
 			</Card>
 		</div>
-		{file && (<div className="flex">
-			<Image className="w-[300px]" style={{ maxWidth: '100%' }}
+		{file && (<div className="flex flex-row my-8">
+			<Image
+				className="w-full h-full object-cover"
 				alt="NextUI hero Image"
+				width={600}
+				height={300}
+				style={{ minWidth: '600px', maxWidth: '500px', maxHeight: '400px'}}
 				src={URL.createObjectURL(file)}
 			/>
 			<Listbox
@@ -130,45 +142,49 @@ export default function ImageUpload () {
 					className={item.selected ? 'text-success' : ''}
 					color={item.selected ? 'success' : 'default'}
 				>
-					{item.label}
+					<span style={{ fontSize: `1.5em` }}>
+            			{item.label}
+          			</span>
 				</ListboxItem>
 				)}
 			</Listbox>
 		</div>)}
-		<Card>
-			<CardBody> Recipe Output
-				{isLoading &&
-				(<Progress
-					size="sm"
-					isIndeterminate
-					aria-label="Loading..."
-					className="max-w-md"
-				/>)}
-				{ingredientList.length != 0 &&
-				(<div>
-					<Table aria-label="Example table with dynamic content">
-						<TableHeader>
-							<TableColumn key="ingredients">Ingredients</TableColumn>
-						</TableHeader>
-						<TableBody>
-							{ingredientList.map((item) =>
-							<TableRow key={item}>
-								<TableCell>{item}</TableCell>
-							</TableRow>
-							)}
-						</TableBody>
-					</Table>
-				</div>)}
-				{stepsList.length != 0 &&
-				(<Accordion>
-					{stepsList.map((item) => (
-						<AccordionItem key={item.number} aria-label={`Step ${item.number}`} title={`Step ${item.number}`}>
-						{item.description}
-						</AccordionItem>
-					))}
-				</Accordion>)}
-			</CardBody>
-		</Card>
+		<div>
+			<Card>
+				<CardBody> Recipe Output
+					{isLoading &&
+					(<Progress
+						size="sm"
+						isIndeterminate
+						aria-label="Loading..."
+						className="max-w-md"
+					/>)}
+					{ingredientList.length != 0 &&
+					(<div>
+						<Table aria-label="Example table with dynamic content">
+							<TableHeader>
+								<TableColumn key="ingredients">Ingredients</TableColumn>
+							</TableHeader>
+							<TableBody>
+								{ingredientList.map((item) =>
+								<TableRow key={item}>
+									<TableCell>{item}</TableCell>
+								</TableRow>
+								)}
+							</TableBody>
+						</Table>
+					</div>)}
+					{stepsList.length != 0 &&
+					(<Accordion>
+						{stepsList.map((item) => (
+							<AccordionItem key={item.number} aria-label={`Step ${item.number}`} title={`Step ${item.number}`}>
+							{item.description}
+							</AccordionItem>
+						))}
+					</Accordion>)}
+				</CardBody>
+			</Card>
 		</div>
+	</div>
   )
 }
