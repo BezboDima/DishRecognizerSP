@@ -17,6 +17,7 @@ export default function Home() {
 				<br/>
 				<h1 className={title({ color: "green" })}>Ingredient Lens</h1>
 				<br/>
+				<br/>
 				<h1 className={title()}>
 					Use the power of AI to find recipes for dishes you&apos;ve seen.
 				</h1>
