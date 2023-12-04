@@ -60,7 +60,7 @@ export default function PopularDishes() {
 	<div>
 		<div>
 			<h1 className={title()}>Popular Dishes</h1>
-			<p className="py-2">Don't have a dish? Try uploading one of these!</p>
+			<p className="py-2">Don&apos;t have a dish? Try uploading one of these!</p>
 		</div>
 		
 		<br></br>
