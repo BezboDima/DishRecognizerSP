@@ -53,8 +53,8 @@ export default function PopularDishes() {
 		},
 		{
 		title: "Steak",
-		img: "steak.png",
-		link: "/steak.png",
+		img: "steak.jpeg",
+		link: "/steak.jpeg",
 		},
 		{
 		title: "Ice Cream",
@@ -88,7 +88,7 @@ export default function PopularDishes() {
 							radius="lg"
 							width="100%"
 							alt={item.title}
-							className="w-full object-cover h-[250px]"
+							className="w-[250px] object-cover h-[250px]"
 							src={item.img}
 							/>
 						</CardBody>
