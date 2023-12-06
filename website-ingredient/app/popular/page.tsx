@@ -92,7 +92,7 @@ export default function PopularDishes() {
 							src={item.img}
 							/>
 						</CardBody>
-						<CardFooter className="text-white text-large justify-center">
+						<CardFooter className="text-grey-50 text-large justify-center">
 							<b>{item.title}</b>
 						</CardFooter>
 					</a>

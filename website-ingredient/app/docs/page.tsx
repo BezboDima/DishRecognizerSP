@@ -31,7 +31,7 @@ export default function DocsPage() {
 						<Image
 							removeWrapper
 							alt="Card background"
-							className="z-0 w-full h-full object-cover"
+							className="z-0 w-full h-[300px] object-cover"
 							src="food_background1.jpg"
 						/>
 					</Link>
@@ -46,7 +46,7 @@ export default function DocsPage() {
 						<Image
 							removeWrapper
 							alt="Card background"
-							className="z-0 w-full h-full object-cover"
+							className="z-0 w-full h-[300px] object-cover"
 							src="chatgpt.jpg"
 						/>
 					</Link>
@@ -61,7 +61,7 @@ export default function DocsPage() {
 						<Image
 							removeWrapper
 							alt="Card background"
-							className="z-0 w-full h-full object-cover"
+							className="z-0 w-full h-[300px] object-cover"
 							src="aws.jpg"
 						/>
 					</Link>
@@ -76,7 +76,7 @@ export default function DocsPage() {
 						<Image
 							removeWrapper
 							alt="Card background"
-							className="z-0 w-full h-full object-cover"
+							className="z-0 w-full h-[300px] object-cover"
 							src="nextui.png"
 						/>
 					</Link>
@@ -94,7 +94,7 @@ export default function DocsPage() {
 						<Image
 							removeWrapper
 							alt="Card background"
-							className="z-0 w-full h-full object-cover"
+							className="z-0 w-full h-[300px] object-cover"
 							src="mu_logo.png"
 						/>
 					</Link>
