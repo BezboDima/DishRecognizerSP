@@ -45,7 +45,7 @@ Recipe Prompt Format:
     for ingredient in ingredients:
         print(ingredient)
 
-    step_pattern = r'\n\s+(\d+)\.(?!\sInstructions:)(.+)'
+    step_pattern = r'\n\s+(\d+)\.(?!\sInstructions:)(?!\sDish\sName:\s)(.+)'
     # Find all matches in the instruction text
     steps = re.findall(step_pattern, recipe, re.DOTALL)
     handled_steps = []
