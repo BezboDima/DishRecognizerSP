@@ -4,59 +4,47 @@ export const siteConfig = {
 	name: "Ingredient Lens",
 	description: "Find recipes for food you've seen.",
 	navItems: [
-		{
-			label: "Home",
-			href: "/",
-		},
+	{
+		label: "Home",
+		href: "/",
+	},
     {
-      label: "Docs",
-      href: "/docs",
+		label: "Docs",
+		href: "/docs",
     },
     {
-      label: "Popular Dishes",
-      href: "/popular",
+		label: "Popular Dishes",
+		href: "/popular",
     },
     {
-      label: "Image Upload",
-      href: "/image_upload",
+		label: "Image Upload",
+		href: "/image_upload",
     },
     {
-      label: "About",
-      href: "/about",
+		label: "About",
+		href: "/about",
     }
 	],
 	navMenuItems: [
 		{
-			label: "Profile",
-			href: "/profile",
+			label: "Home",
+			href: "/",
 		},
 		{
-			label: "Dashboard",
-			href: "/dashboard",
+			label: "Docs",
+			href: "/docs",
 		},
 		{
-			label: "Projects",
-			href: "/projects",
+			label: "Popular Dishes",
+			href: "/popular",
 		},
 		{
-			label: "Team",
-			href: "/team",
+			label: "Image Upload",
+			href: "/image_upload",
 		},
 		{
-			label: "Calendar",
+			label: "About",
 			href: "/calendar",
-		},
-		{
-			label: "Settings",
-			href: "/settings",
-		},
-		{
-			label: "Help & Feedback",
-			href: "/help-feedback",
-		},
-		{
-			label: "Logout",
-			href: "/logout",
 		},
 	],
 	links: {
