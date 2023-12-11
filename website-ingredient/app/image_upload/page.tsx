@@ -110,11 +110,13 @@ export default function ImageUpload() {
 							name="file"
 							onChange={(e) => { handleImageUpload(e) }}
 						/>
-						<Button type="submit" size="md">
+						{file && (
+						<Button className="mx-4" type="submit" size="md" >
 							Generate Labels
 						</Button>
+						)}
 						{isChosen && (
-						<Button size="md" onClick={handleRecipeClick}>
+						<Button className="mx-4" size="md" onClick={handleRecipeClick}>
 							Generate Recipe
 						</Button>
 						)}
@@ -149,7 +151,7 @@ export default function ImageUpload() {
 				)}
 			</Listbox>
 		</div>)}
-		<div>
+		{isRecipe && (<div>
 			<Card>
 				<CardBody> Recipe Output
 					{isLoading &&
@@ -184,7 +186,7 @@ export default function ImageUpload() {
 					</Accordion>)}
 				</CardBody>
 			</Card>
-		</div>
+		</div>)}
 	</div>
   )
 }

@@ -20,6 +20,9 @@ export const title = tv({
 		fullWidth: {
 			true: "w-full block",
 		},
+		animate: {
+			gradient: "animate-gradient", // Add your animation class here
+		},
 	},
 	defaultVariants: {
 		size: "md",
