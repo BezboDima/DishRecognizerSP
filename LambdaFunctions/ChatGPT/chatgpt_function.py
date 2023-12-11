@@ -50,19 +50,18 @@ Recipe Prompt Format:
     # Find all matches in the instruction text
     steps = re.findall(step_pattern, recipe, re.DOTALL)
     print(steps)
-    if len(steps) > 0:
-        split_pattern = r'\d+\.'
-        splitSteps = re.split(split_pattern,steps[0])
-        print(splitSteps)
-        steps = splitSteps
 
     if len(steps) == 0:
         steps = re.findall(numbered_step_pattern, recipe, re.DOTALL)
     print(steps)
 
+    split_pattern = r'\d+\.'
+    splitSteps = re.split(split_pattern,steps[0])
+    print(splitSteps)
+    steps = splitSteps
+
     handled_steps = []
     num = 1
-    print()
 
     for step in steps:
         #step_number = step[0]
