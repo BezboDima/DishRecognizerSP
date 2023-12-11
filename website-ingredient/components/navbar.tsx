@@ -91,8 +91,8 @@ export const Navbar = () => {
 				</NavbarItem>
 				<NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
 				<NavbarItem className="hidden md:flex">
-					
 				</NavbarItem>
+				{/* <NavbarMenuToggle /> */}
 			</NavbarContent>
 
 			<NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
@@ -110,13 +110,13 @@ export const Navbar = () => {
 						<NavbarMenuItem key={`${item}-${index}`}>
 							<Link
 								color={
-									index === 2
-										? "primary"
+									index === 1
+										? "foreground"
 										: index === siteConfig.navMenuItems.length - 1
-										? "danger"
+										? "foreground"
 										: "foreground"
 								}
-								href="#"
+								href={item.href}
 								size="lg"
 							>
 								{item.label}
