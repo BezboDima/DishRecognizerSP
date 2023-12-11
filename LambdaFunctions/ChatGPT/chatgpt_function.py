@@ -45,14 +45,30 @@ Recipe Prompt Format:
     for ingredient in ingredients:
         print(ingredient)
 
-    step_pattern = r'\n\s+(\d+)\.(?!\sInstructions:)(.+)'
+    step_pattern = r'\n\s+\d+\.(?!\sInstructions:)(?!\sDish\sName:\s)(?!\sIngredients:)(.+)'
+    numbered_step_pattern = r'\n\d+\.(.+)\n'
     # Find all matches in the instruction text
     steps = re.findall(step_pattern, recipe, re.DOTALL)
+    print(steps)
+    if len(steps) > 0:
+        split_pattern = r'\d+\.'
+        splitSteps = re.split(split_pattern,steps[0])
+        print(splitSteps)
+        steps = splitSteps
+
+    if len(steps) == 0:
+        steps = re.findall(numbered_step_pattern, recipe, re.DOTALL)
+    print(steps)
+
     handled_steps = []
-    # Process the matches
+    num = 1
+    print()
+
     for step in steps:
-        step_number = step[0]
-        step_description = step[1]
+        #step_number = step[0]
+        step_number = num
+        #step_description = step[1]
+        step_description = step.strip()
         #step_parts = step[2].strip().split('\n') if step[2] else []
     
         handled_steps.append({
@@ -65,6 +81,7 @@ Recipe Prompt Format:
         #for part in step_parts:
          #   print(part.strip())
         print()
+        num += 1
 
     recipe_data = {
         'ingredients': ingredients,
