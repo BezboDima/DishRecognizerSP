@@ -36,6 +36,7 @@ export default function ImageUpload() {
   }
   const handleRecipeClick = () => {
     setIsLoading(true)
+	setIsRecipe(true)
     console.log(detectedList)
     const selectedKey = detectedList.find((detectedList) => detectedList.selected)?.key
 
