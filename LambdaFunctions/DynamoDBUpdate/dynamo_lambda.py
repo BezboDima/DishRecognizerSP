@@ -47,4 +47,4 @@ def lambda_handler(event, context):
 
 if __name__ == '__main__':
     event = {"login" : "m", "password" : "1234"}
-    print(lambda_handler(event, None))
+    print(lambda_handler(event, None))   

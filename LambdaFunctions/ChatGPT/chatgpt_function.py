@@ -61,26 +61,27 @@ Recipe Prompt Format:
     steps = splitSteps
 
     handled_steps = []
-    num = 1
+    #num = 1
 
     for step in steps:
         #step_number = step[0]
-        step_number = num
+        #step_number = num
         #step_description = step[1]
         step_description = step.strip()
         #step_parts = step[2].strip().split('\n') if step[2] else []
     
-        handled_steps.append({
+        """handled_steps.append({
             'number': step_number,
             'description': step_description,
             #'parts': step_parts
-        })
+        })"""
 
-        print(f"Step {step_number}: {step_description}")
+        handled_steps.append(step_description)
+        print(f"Step : {step_description}")
         #for part in step_parts:
          #   print(part.strip())
         print()
-        num += 1
+        #num += 1
 
     recipe_data = {
         'ingredients': ingredients,
