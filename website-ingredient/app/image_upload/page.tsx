@@ -1,6 +1,10 @@
 'use client'
 import { Listbox, ListboxItem } from '@nextui-org/listbox'
-import { useState } from 'react'
+import { useState } from "react";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import {checkToken} from "../../src/cookies";
 import { callPostGatewayApi, callPostLambda } from '../../src/request'
 import { getBase64, getHashKey } from '../../src/generators'
 import { Image } from '@nextui-org/image'
@@ -12,13 +16,30 @@ import { Table, TableBody, TableHeader, TableColumn, TableRow, TableCell } from 
 
 export default function ImageUpload() {
   const [file, setFile] = useState<File>()
-  const [base64, setBase64] = useState<string>()
+  const [imageHash, setImageHash] = useState("");
   const [detectedList, setDetectedList] = useState<Array<{ key: string, label: string, selected: boolean }>>([])
-  const [stepsList, setStepsList] = useState<Array<{ number: number, description: string }>>([])
+  const [stepsList, setSteps] = useState<Array<string>>([])
   const [ingredientList, setIngredientList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [isChosen, setIsChosen] = useState(false);
   const [isRecipe, setIsRecipe] = useState(false);
+  const [user, setUser] = useState("Guest");
+
+
+  const router = useRouter();
+	useEffect(() => {
+		const token = Cookies.get("token");
+		const checked = checkToken(token);
+
+		if (!checked) {
+		  router.push("/login"); // If no token is found, redirect to login page
+		  return;
+		}
+		else{
+			console.log('Login:', checked.login);
+			setUser(checked.login);
+		}
+	}, [router]);
 
   const handleListItemClick = (key: string) => {
     setDetectedList((prevList) =>
@@ -47,9 +68,34 @@ export default function ImageUpload() {
 
     const response = callPostLambda(data)
       .then(result => {
-        setStepsList(result.steps)
+        setSteps(result.steps)
         setIngredientList(result.ingredients)
         setIsLoading(false)
+
+		const currentDateTime = new Date();
+		const formattedDateTime = currentDateTime.toLocaleString('en-US', { hour12: false });
+
+		const historyData = {
+			date : formattedDateTime,
+			imageHash : imageHash,
+			labels : detectedList.map(item => item.label),
+			recepie : {
+				ingredients: ingredientList,
+				steps : stepsList
+			}
+		}
+		console.log("History: ", historyData)
+		const data = {
+			login : user,
+			historyItem : historyData
+		}
+		const response = callPostGatewayApi('dynamo-update', data)
+			.then(result => {
+				console.log(result)
+			})
+			.catch (error => {
+				console.error(error)
+			})
       })
       .catch(error => {
         console.error(error)
@@ -60,15 +106,15 @@ export default function ImageUpload() {
     e.preventDefault()
     try {
       const b64 = await getBase64(file)
-      setBase64(b64)
-      const id = getHashKey()
+      const hash = getHashKey(file)
+	  setImageHash(hash);
       const data = {
         b_image: b64,
         bucket: 'gereral-bucket',
-        key: `user-image/${id}.png`
+        key: `user-image/${user}/${hash}.png`
       }
 
-      if (!callPostGatewayApi('s3_upload', data)) {
+      if (!callPostGatewayApi('s3_upload', data, )) {
         console.error("Picture wasn't uploaded to s3")
       }
 
@@ -179,9 +225,9 @@ export default function ImageUpload() {
 					</div>)}
 					{stepsList.length != 0 &&
 					(<Accordion>
-						{stepsList.map((item) => (
-							<AccordionItem key={item.number} aria-label={`Step ${item.number}`} title={`Step ${item.number}`}>
-							{item.description}
+						{stepsList.map((item, index) => (
+							<AccordionItem key={index + 1} aria-label={`Step ${index + 1}`} title={`Step ${index + 1}`}>
+							{item}
 							</AccordionItem>
 						))}
 					</Accordion>)}

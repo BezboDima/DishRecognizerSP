@@ -1,10 +1,28 @@
 'use client'
 import { title } from "@/components/primitives";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import {checkToken} from "../../src/cookies";
+import Cookies from "js-cookie";
 import { Button, Card, CardHeader, CardBody, CardFooter, Image, Link } from "@nextui-org/react";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 
 export default function DocsPage() {
 
+	const router = useRouter();
+	useEffect(() => {
+		const token = Cookies.get("token");
+		const checked = checkToken(token);
+
+		if (!checked) {
+		  router.push("/login"); // If no token is found, redirect to login page
+		  return;
+		}
+		else{
+			console.log('Login:', checked.login);
+		}
+	}, [router]);
+	
 	return (
 		<div>
 			<div>

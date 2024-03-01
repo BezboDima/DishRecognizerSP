@@ -1,4 +1,4 @@
-
+import { SHA256 } from 'crypto-js';
 export function getBase64(file:any) { 
     return new Promise<any>((resolve, reject) => {
       const reader = new FileReader();
@@ -23,8 +23,8 @@ export function getBase64(file:any) {
 }
 import crypto from 'crypto';
 
-export function getHashKey(): string {
-  const randomBytes = crypto.randomBytes(4); // Using 4 bytes to get 8 characters
-  const hashKey = randomBytes.toString('hex').substring(0, 8);
-  return hashKey;
+export function getHashKey(binaryData: any): string {
+  const hash = SHA256(binaryData as string).toString();
+  const shortHash = hash.substring(0, 8);
+  return shortHash;
 }
