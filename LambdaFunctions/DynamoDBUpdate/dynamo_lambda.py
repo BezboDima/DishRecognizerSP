@@ -10,11 +10,11 @@ def lambda_handler(event, context):
         
         response = table.get_item(
             Key={
-                'email': event['login'],
+                'email': str(event['login']),
             }
         )
         print(response)
-        item = response.get('Item')
+        item = response['Item']
 
         if item:
             # Step 2: Update the array in the item
