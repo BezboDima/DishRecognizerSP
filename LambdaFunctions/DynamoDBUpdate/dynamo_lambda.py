@@ -29,7 +29,7 @@ def lambda_handler(event, context):
             # Step 3: Save the modified item back to DynamoDB
             update_response = table.update_item(
                 Key={
-                    'login': event['login'],
+                    'email': event['login'],
                 },
                 UpdateExpression=f'SET {array_field_name} = :newArray',
                 ExpressionAttributeValues={
