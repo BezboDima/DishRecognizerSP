@@ -10,10 +10,10 @@ def lambda_handler(event, context):
         
         response = table.get_item(
             Key={
-                'login': event['login'],
+                'email': event['login'],
             }
         )
-
+        print(response)
         item = response.get('Item')
 
         if item:
