@@ -15,7 +15,12 @@ def lambda_handler(event, context):
         table_name = "LoginInfo"
         table = dynamodb.Table(table_name)
         
-        response = table.get_item(Key={'email':event['login']})
+        response = table.get_item(
+            Key={
+                'email':str(event['login'])
+            },
+            ConsistentRead=True
+        )
         
         item = response['Item']
 

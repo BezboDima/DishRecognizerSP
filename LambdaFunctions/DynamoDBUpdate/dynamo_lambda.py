@@ -11,7 +11,8 @@ def lambda_handler(event, context):
         response = table.get_item(
             Key={
                 'email': str(event['login']),
-            }
+            },
+            ConsistentRead=True
         )
         print(response)
         item = response['Item']
