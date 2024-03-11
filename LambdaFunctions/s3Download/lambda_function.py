@@ -11,9 +11,6 @@ def download_file(event, context):
     :return: True if file was uploaded, else False
     """
     
-    # Decode the base64-encoded image data to bytes
-    image_bytes = base64.b64decode(event["b_image"], validate=True)
-    
     # Upload the file
     s3_client = boto3.client('s3')
     try:
