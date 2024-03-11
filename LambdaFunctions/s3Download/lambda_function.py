@@ -18,12 +18,18 @@ def download_file(event, context):
             Bucket=event["bucket"],
             Key=event["key"],
         )
+        print(response)
         # Read the content of the response
         image_content = response['Body'].read()
 
         # Encode the binary data to Base64
         base64_encoded_image = base64.b64encode(image_content).decode('utf-8')
-
+ 
+        print(base64_encoded_image)
         return {'status' : True, 'image' : base64_encoded_image}
-    except ClientError as e:
+    except Exception as e:
         return {'status' : False, 'error' : e}
+    
+if __name__ == "__main__":
+    event = {"bucket" : "gereral-bucket", "key" : "user-image/dimabezbo@gmail.com/4ea5c508.png"}
+    print(download_file(event, None))   
