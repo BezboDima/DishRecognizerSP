@@ -26,4 +26,4 @@ def download_file(event, context):
 
         return {'status' : True, 'image' : base64_encoded_image}
     except ClientError as e:
-        return False
+        return {'status' : False, 'error' : e}
