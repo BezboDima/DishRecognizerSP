@@ -23,7 +23,7 @@ export default function ImageUpload() {
   const [isLoading, setIsLoading] = useState(false)
   const [isChosen, setIsChosen] = useState(false);
   const [isRecipe, setIsRecipe] = useState(false);
-  const [user, setUser] = useState("Guest");
+  const [user, setUser] = useState<string>("Guest");
 
 
   const router = useRouter();
@@ -31,11 +31,7 @@ export default function ImageUpload() {
 		const token = Cookies.get("token");
 		const checked = checkToken(token);
 
-		if (!checked) {
-		  router.push("/login"); // If no token is found, redirect to login page
-		  return;
-		}
-		else{
+		if (checked && typeof checked.login === 'string') {
 			console.log('Login:', checked.login);
 			setUser(checked.login);
 		}
@@ -80,8 +76,8 @@ export default function ImageUpload() {
 			imageHash : imageHash,
 			labels : detectedList.map(item => item.label),
 			recepie : {
-				ingredients: ingredientList,
-				steps : stepsList
+				ingredients: result.ingredients,
+				steps : result.steps
 			}
 		}
 		console.log("History: ", historyData)
@@ -89,7 +85,7 @@ export default function ImageUpload() {
 			login : user,
 			historyItem : historyData
 		}
-		const response = callPostGatewayApi('dynamo-update', data)
+		callPostGatewayApi('dynamo-update', data)
 			.then(result => {
 				console.log(result)
 			})
