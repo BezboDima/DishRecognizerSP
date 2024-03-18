@@ -13,7 +13,6 @@ export async function callPostGatewayApi (endpoint: string, requestData: any) {
     }
 
     const data = await response.json() // Parse the JSON response
-    console.log(data)
     return data // Return the parsed JSON data
   } catch (error) {
     // Handle any errors that occurred during the API call

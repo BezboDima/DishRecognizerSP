@@ -102,7 +102,8 @@ export default function ImageUpload() {
     e.preventDefault()
     try {
       const b64 = await getBase64(file)
-      const hash = getHashKey(file)
+      const hash = await getHashKey(file)
+	  console.log(hash)
 	  setImageHash(hash);
       const data = {
         b_image: b64,
@@ -110,7 +111,7 @@ export default function ImageUpload() {
         key: `user-image/${user}/${hash}.png`
       }
 
-      if (!callPostGatewayApi('s3_upload', data, )) {
+      if (!callPostGatewayApi('s3_upload', data )) {
         console.error("Picture wasn't uploaded to s3")
       }
 

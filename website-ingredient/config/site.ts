@@ -23,7 +23,11 @@ export const siteConfig = {
     {
 		label: "About",
 		href: "/about",
-    }
+    },
+	{
+		label: "History",
+		href: "/history"
+	}
 	],
 	navMenuItems: [
 		{
@@ -46,6 +50,10 @@ export const siteConfig = {
 			label: "About",
 			href: "/calendar",
 		},
+		{
+			label: "History",
+			href: "/history"
+		}
 	],
 	links: {
 		github: "https://github.com/BezboDima/IngredientLens.git",

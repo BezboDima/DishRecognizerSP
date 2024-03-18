@@ -1,5 +1,5 @@
 import boto3
-from botocore.exceptions import ClientError
+from botocore.exceptions import NoCredentialsError, NoSuchKey
 import base64
 
 def download_file(event, context):
@@ -27,8 +27,15 @@ def download_file(event, context):
  
         print(base64_encoded_image)
         return {'status' : True, 'image' : base64_encoded_image}
+    except NoSuchKey as e:
+        print(f"The specified key '{event["key"]}' does not exist in the bucket '{event["bucket"]}'.")
+        return {'status' : False}
+    except NoCredentialsError:
+        print("Credentials not available.")
+        return {'status' : False}
     except Exception as e:
-        return {'status' : False, 'error' : e}
+        print(f"An error occurred: {e}")
+        return {'status' : False}
     
 if __name__ == "__main__":
     event = {"bucket" : "gereral-bucket", "key" : "user-image/dimabezbo@gmail.com/4ea5c508.png"}
