@@ -22,7 +22,7 @@ def lambda_handler(event, context):
             field_name = 'diet'  # Replace with the name of your array field
 
             # Initialize the array if it doesn't exist
-            item[field_name] = event["diet"]
+            item[field_name] = event['diet']
 
             # Step 3: Save the modified item back to DynamoDB
             update_response = table.update_item(

@@ -28,7 +28,7 @@ def lambda_handler(event, context):
                 item[array_field_name].remove(event['allergy'])
             if(event['action'] == 'add'):
                 # Add a new dictionary to the array
-                item[array_field_name].append(event['historyItem'])
+                item[array_field_name].append(event['allergy'])
             
             # Step 3: Save the modified item back to DynamoDB
             update_response = table.update_item(
