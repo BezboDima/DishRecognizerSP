@@ -28,7 +28,7 @@ def download_file(event, context):
         print(base64_encoded_image)
         return {'status' : True, 'image' : base64_encoded_image}
     except NoSuchKey as e:
-        print(f"The specified key '{event["key"]}' does not exist in the bucket '{event["bucket"]}'.")
+        print(f"The specified key {event["key"]} does not exist in the bucket {event["bucket"]}.")
         return {'status' : False}
     except NoCredentialsError:
         print("Credentials not available.")
