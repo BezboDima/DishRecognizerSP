@@ -25,8 +25,8 @@ def lambda_handler(event, context):
         item = response['Item']
 
         # Replace 'your-attribute-name' with the attribute you want to retrieve
-        attribute_value = item.get('history')
-        return {'status' : True, 'history' : attribute_value}
+        attribute_value = item.get(event['item'])
+        return {'status' : True, 'item' : attribute_value}
     except Exception as e:
         print(e)
         return {'status' : False, 'error': str(e)}
