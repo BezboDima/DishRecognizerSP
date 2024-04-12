@@ -15,7 +15,24 @@ def lambda_handler(event, context):
     # Lays out the prompt to send to OpenAI.
     #prompt = "Generate a step-by-step recipe for " + str(label_value) + " in a format suitable for display on a website. Include a list of ingredients and detailed instructions for each step. Ensure the format is clear, consistent, and optimized for website display, with ingredients listed first followed by sequential steps. Label each step in the following format: \"Step 1: \"."
     
-    prompt = "Generate a step-by-step recipe for " + str(label_value) + """ in a format suitable for display on a website. Include a list of ingredients and detailed instructions for each step. Ensure the format is clear, consistent, and optimized for website display, with ingredients listed first followed by sequential steps. Use the following format:
+    allergies = body_dict.get('allergies')
+    diet = body_dict.get('diet')
+
+    allergies_string = ""
+    if allergies is not None:
+        allergies_string = " without "
+        for allergy in allergies:
+            allergies_string += str(allergy)
+            allergies_string += ", "
+
+    diet_string = ""
+    if diet is not None:
+        diet_string = " " + str(diet) + " "
+
+    # Lays out the prompt to send to OpenAI. xdd
+    #prompt = "Generate a step-by-step recipe for " + str(label_value) + " in a format suitable for display on a website. Include a list of ingredients and detailed instructions for each step. Ensure the format is clear, consistent, and optimized for website display, with ingredients listed first followed by sequential steps. Label each step in the following format: "Step 1: "."
+
+    prompt = "Generate a step-by-step recipe for " + diet_string + str(label_value) + allergies_string + """ in a format suitable for display on a website. Include a list of ingredients and detailed instructions for each step. Ensure the format is clear, consistent, and optimized for website display, with ingredients listed first followed by sequential steps. Use the following format:
 
 Recipe Prompt Format:
 
