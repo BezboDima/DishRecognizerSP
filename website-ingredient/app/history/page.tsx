@@ -37,25 +37,27 @@ export default function history() {
 			setUser(checked.login);
 
             const data = {
-                login: checked.login
+                login: checked.login,
+                item: 'history'
             }
             callPostGatewayApi('get-history', data)
             .then(async result => {
-                setHistory(result.history);
-                const promises = result.history.map(async (item: History, index: number) => {
+                setHistory(result.item);
+                const promises = result.item.map(async (item: History, index: number) => {
+                    console.log(item);
                     const data = {
                         bucket: 'gereral-bucket',
                         key: `user-image/${checked.login}/${item.imageHash}.png`
                     };
-        
+                    console.log(data);
                     try {
                         const result = await callPostGatewayApi('s3-download', data);
                         const filename = `image_${index + 1}.png`; // Example filename
                         const mimeType = 'image/png'; // Adjust the mime type based on your image type
-        
+                        console.log(result)
                         return base64toFile(result.image, filename, mimeType);
                     } catch (error) {
-                        console.error(error);
+                        console.log(error);
                         return null;
                     }
                 });

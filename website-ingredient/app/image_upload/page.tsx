@@ -25,6 +25,10 @@ export default function ImageUpload() {
   const [isRecipe, setIsRecipe] = useState(false);
   const [user, setUser] = useState<string>("Guest");
 
+  const [allergies, setAllergies] = useState([]);
+  const [diet, setDiet] = useState("");
+
+  const [isFormEnab, setIsFormEnab] = useState(true);
 
   const router = useRouter();
 	useEffect(() => {
@@ -34,7 +38,32 @@ export default function ImageUpload() {
 		if (checked && typeof checked.login === 'string') {
 			console.log('Login:', checked.login);
 			setUser(checked.login);
+            var data = {
+                login: checked.login,
+                item: 'diet'
+            }
+            callPostGatewayApi('get-history', data)
+            .then(async result => {
+                console.log(result.item);
+                setDiet(result.item);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+            data = {
+                login: checked.login,
+                item: 'allergies'
+            }
+            callPostGatewayApi('get-history', data)
+            .then(async result => {
+                console.log(result.item);
+                setAllergies(result.item);
+            })
+            .catch(error => {
+                console.error(error);
+            });
 		}
+
 	}, [router]);
 
   const handleListItemClick = (key: string) => {
@@ -59,7 +88,9 @@ export default function ImageUpload() {
 
     console.log(selectedKey)
     const data = {
-      label: selectedKey
+      label: selectedKey,
+	  allergies: allergies,
+	  diet: diet
     }
 
     const response = callPostLambda(data)
@@ -103,7 +134,6 @@ export default function ImageUpload() {
     try {
       const b64 = await getBase64(file)
       const hash = await getHashKey(file)
-	  console.log(hash)
 	  setImageHash(hash);
       const data = {
         b_image: b64,
@@ -174,7 +204,7 @@ export default function ImageUpload() {
 				alt="NextUI hero Image"
 				width={600}
 				height={300}
-				style={{ minWidth: '600px', maxWidth: '500px', maxHeight: '400px'}}
+				style={{ minWidth: '400px', maxWidth: '300px', maxHeight: '300px'}}
 				src={URL.createObjectURL(file)}
 			/>
 			<Listbox
