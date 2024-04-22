@@ -1,5 +1,5 @@
 import boto3
-from botocore.exceptions import NoCredentialsError
+from botocore.exceptions import NoCredentialsError, ClientError
 import base64
 
 def download_file(event, context):
@@ -14,19 +14,16 @@ def download_file(event, context):
     # Upload the file
     s3_client = boto3.client('s3')
     try:
-        response = s3_client.get_object(
-            Bucket=event["bucket"],
-            Key=event["key"],
-        )
+        response = s3_client.generate_presigned_url('get_object',
+                                                    Params={'Bucket': event["bucket"],
+                                                            'Key': event["key"]},
+                                                    ExpiresIn=3600)
         print(response)
         # Read the content of the response
-        image_content = response['Body'].read()
-
-        # Encode the binary data to Base64
-        base64_encoded_image = base64.b64encode(image_content).decode('utf-8')
- 
-        print(base64_encoded_image)
-        return {'status' : True, 'image' : base64_encoded_image}
+        return {'status' : True, 'image' : response}
+    except ClientError as e:
+        print(e)
+        return {'status' : False}
     except NoCredentialsError:
         print("Credentials not available.")
         return {'status' : False}
