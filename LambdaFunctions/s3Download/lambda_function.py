@@ -14,13 +14,16 @@ def download_file(event, context):
     # Upload the file
     s3_client = boto3.client('s3')
     try:
-        response = s3_client.generate_presigned_url('get_object',
-                                                    Params={'Bucket': event["bucket"],
-                                                            'Key': event["key"]},
-                                                    ExpiresIn=3600)
-        print(response)
+        urls = []
+        for path in event['images']:
+            
+            response = s3_client.generate_presigned_url('get_object',
+                                                        Params={'Bucket': event["bucket"],
+                                                                'Key': path},
+                                                        ExpiresIn=3600)
+            urls.append(response)
         # Read the content of the response
-        return {'status' : True, 'image' : response}
+        return {'status' : True, 'images' : urls}
     except ClientError as e:
         print(e)
         return {'status' : False}
