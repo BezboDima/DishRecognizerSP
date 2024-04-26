@@ -23,7 +23,7 @@ interface History {
 
 export default function history() {
 
-    const [historyImages, setHistoryImages] = useState<File[]>([]);
+    const [historyImages, setHistoryImages] = useState<string[]>([]);
     const [history, setHistory] = useState<History[]>([]);
     const [user, setUser] = useState("");
     const router = useRouter();
@@ -43,36 +43,27 @@ export default function history() {
             callPostGatewayApi('get-history', data)
             .then(async result => {
                 setHistory(result.item);
-                const promises = result.item.map(async (item: History, index: number) => {
-                    console.log(item);
-                    const data = {
-                        bucket: 'gereral-bucket',
-                        key: `user-image/${checked.login}/${item.imageHash}.png`
-                    };
-                    console.log(data);
-                    try {
-                        const result = await callPostGatewayApi('s3-download', data);
-                        const filename = `image_${index + 1}.png`; // Example filename
-                        const mimeType = 'image/png'; // Adjust the mime type based on your image type
-                        console.log(result)
-                        return base64toFile(result.image, filename, mimeType);
-                    } catch (error) {
-                        console.log(error);
-                        return null;
-                    }
+                const images_paths = result.item.map((item: History, index: number) => {
+                    return `user-image/${checked.login}/${item.imageHash}.png`;
                 });
-        
-                try {
-                    const newImages = await Promise.all(promises);
-                    console.log("Images", newImages);
-                    setHistoryImages(newImages); // Filter out null values if needed
-                } catch (error) {
-                    console.error(error);
-                }
+
+                const image_call = {
+                    bucket: 'gereral-bucket',
+                    images: images_paths
+                };
+
+                console.log(image_call);
+                callPostGatewayApi('s3-download', image_call)
+                .then(result => {
+                    setHistoryImages(result.images);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
             })
             .catch(error => {
-                console.error(error);
-            });
+                console.log(error)
+            })
 		} 
 	}, [router]);
 
@@ -95,11 +86,11 @@ export default function history() {
                 <CardBody className="overflow-visible py-2">
                 <div className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center">
                     <div className="relative col-span-6 md:col-span-6">
-                        {historyImages[index] instanceof File && historyImages[index].type.startsWith('image') ? (
+                        {historyImages[index] ? (
                             <Image
                             alt="Not accessible"
                             className="object-cover rounded-xl"
-                            src={URL.createObjectURL(historyImages[index])}
+                            src={historyImages[index]}
                             width={400}
                         />
                         ) : (

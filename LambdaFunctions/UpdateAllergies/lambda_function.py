@@ -7,29 +7,22 @@ def lambda_handler(event, context):
         dynamodb = boto3.resource("dynamodb")
         table_name = "LoginInfo"
         table = dynamodb.Table(table_name)
-        
         response = table.get_item(
             Key={
                 'email': str(event['login']),
             },
             ConsistentRead=True
         )
-        print(response)
         item = response['Item']
 
         if item:
             # Step 2: Update the array in the item
-            array_field_name = 'allergies'  # Replace with the name of your array field
-
-            # Initialize the array if it doesn't exist
+            array_field_name = 'allergies' 
             item[array_field_name] = item.get(array_field_name, [])
-
             if(event['action'] == 'delete'):
                 item[array_field_name].remove(event['allergy'])
             if(event['action'] == 'add'):
-                # Add a new dictionary to the array
                 item[array_field_name].append(event['allergy'])
-            
             # Step 3: Save the modified item back to DynamoDB
             update_response = table.update_item(
                 Key={

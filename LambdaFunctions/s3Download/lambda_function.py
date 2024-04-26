@@ -16,11 +16,11 @@ def download_file(event, context):
     try:
         urls = []
         for path in event['images']:
-            
-            response = s3_client.generate_presigned_url('get_object',
-                                                        Params={'Bucket': event["bucket"],
-                                                                'Key': path},
-                                                        ExpiresIn=3600)
+            response = s3_client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': event["bucket"],
+                        'Key': path},
+                ExpiresIn=3600)
             urls.append(response)
         # Read the content of the response
         return {'status' : True, 'images' : urls}

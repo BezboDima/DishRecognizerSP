@@ -1,10 +1,11 @@
 "use client"
 import React from "react";
 import { useState, ChangeEvent } from "react";
-import {RadioGroup, Radio, Button, Input, Spacer} from "@nextui-org/react";
-import {checkToken} from "../../src/cookies";
+import {RadioGroup, Radio, Button} from "@nextui-org/react";
+import {checkToken, invalidateToken} from "../../src/cookies";
 import { useRouter } from "next/navigation";
-import NextLink from "next/link";
+import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
+import { allergies } from "@/src/allergies";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { callPostGatewayApi } from '../../src/request'; 
@@ -23,9 +24,7 @@ const columns = [
   ];
 
   export default function history() {
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["2"]));
     const [user, setUser] = useState<string>("?");
-
     const [rowData, setRowData] = useState([
         {
             key: "0",
@@ -33,23 +32,7 @@ const columns = [
             action: "add"
         }]
         );
-
-    const [formData, setFormData] = useState({
-        input: '',
-      });
-    const [isFormEnab, setIsFormEnab] = useState(false);
     
-/*     const handleSubmit = () => {
-        // Call your API here with formData
-        console.log('Form data:', formData);
-        // Reset form data
-        setFormData({
-          input: '',
-        });
-        // Disable form after submitting
-        setIsFormEnabled(false);
-      }; */
-
     const router = useRouter();
     useEffect(() => {
 		const token = Cookies.get("token");
@@ -66,6 +49,7 @@ const columns = [
             .then(async result => {
                 console.log(result.item);
                 setSelectedValue(result.item);
+                setValue(result.item);
             })
             .catch(error => {
                 console.error(error);
@@ -103,25 +87,35 @@ const columns = [
 
 	}, [router]);
 
-    const [value, setValue] = useState("no-limit");
-    const [selectedValue, setSelectedValue] = useState("no-limit");
+    const [value, setValue] = useState("");
+    const [selectedValue, setSelectedValue] = useState("");
     const [isSelectionChanged, setIsSelectionChanged] = useState(true);
+    const [selectedAllergy, setSelectedAllergy] = useState<string>("");
+    const [isValueSelected, setIsValueSelected] = useState<boolean>(false);
 
-
-
-    const handleInputChange = (e: any) => {
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
+    const selectionChange = (key: React.Key) => {
+        if(key === null){
+            setIsValueSelected(false);
+        }
+        else{
+            setSelectedAllergy(key.toString());
+            setIsValueSelected(true);
+        }
+    }
+    
+    const handleClear = () => {
+        setIsValueSelected(false);
       };
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
-        console.log(value, rowData)
+        if (newValue === value){
+            setIsSelectionChanged(true);
+        }
+        else{
+            setIsSelectionChanged(false);
+        }
         setSelectedValue(newValue);
-        setIsSelectionChanged(!isSelectionChanged);
     };
 
     const handleConfirm = () => {
@@ -139,11 +133,7 @@ const columns = [
 				console.error(error)
 			})
     };
-    const handlClick = () => {
-        setIsFormEnab(!isFormEnab); // Toggle the state
-        //setRowData((prevData) => [...prevData, { key: "2", allergy: "None", action: "stee" }]);
-        console.log(rowData);
-    };
+
     const handleDelete = (allegry_: string) => {
         const data = {
             login: user,
@@ -164,15 +154,14 @@ const columns = [
         
     }
     const handleUpload = () => {
-        console.log(formData)
         
-        if(!formData){
+        if(!selectedAllergy){
             return
         }
         const data = {
             login: user,
             action: "add",
-            allergy: formData["input"]
+            allergy: selectedAllergy
         }
 
         callPostGatewayApi('update-alleries', data)
@@ -183,30 +172,44 @@ const columns = [
 				console.error(error)
 			})
         
-        setIsFormEnab(false)
-        setRowData(prevItems => [...prevItems, {key: "2", allergy: formData["input"], action: "remove"}])
+        setRowData(prevItems => [...prevItems, {key: "2", allergy: selectedAllergy, action: "remove"}])
+
+    }
+    const handleLogout = () => {
+        const token = Cookies.get("token");
+        if(token){
+            invalidateToken(token);
+            console.log("Here");
+        }
+
 
     }
     const renderCell = (item: { key: string; allergy: string; action: string; }, columnKey: any) => {
         if(item.key === "0"){
             if(columnKey === "allergy"){
                 return (
-                    <Input
-                        name="input"
-                        value={formData.input}
-                        onChange={handleInputChange}
-                        isDisabled={!isFormEnab}
-                        placeholder={String(isFormEnab)}
-                    />
+                    <Autocomplete 
+                        label="Select an Allergy" 
+                        className="max-w-xs" 
+                        onSelectionChange={selectionChange}
+                        onClear={handleClear}
+                    >
+                        {allergies.map((allergy) => (
+                        <AutocompleteItem key={allergy.value} value={allergy.value}>
+                            {allergy.label}
+                        </AutocompleteItem>
+                        ))}
+                    </Autocomplete>
                 )
             }
             else{
                 return (
                     <Button
-                    onClick={isFormEnab ? handleUpload: handlClick}
-                    color={isFormEnab ? 'success' : 'success'}
+                    isDisabled={!isValueSelected}
+                    onClick={handleUpload}
+                    color='success'
                     >
-                    {isFormEnab ? 'Submit' : 'Enable Form'}
+                    Submit
                     </Button>
                  )
             }
@@ -224,9 +227,9 @@ const columns = [
     }
 
     return (
-        <div className="flex">
+        <div>
             <RadioGroup
-            className="flex-1 w-64"
+            className="w-64 my-10"
             value={selectedValue}
             label="Your current diet"
             color="secondary"
@@ -241,11 +244,9 @@ const columns = [
                 </Button>
             </RadioGroup>
             <Table 
-                className="flex-1 w-128"
+                className="w-128 my-10"
                 aria-label="Controlled table example with dynamic content"
-                selectionMode="single"
-                selectedKeys={selectedKeys}
-                >
+                selectionMode="single">
                 <TableHeader columns={columns}>
                     {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
                 </TableHeader>
@@ -257,6 +258,11 @@ const columns = [
                     ))}
                 </TableBody>
             </Table>
+            <Button 
+                color="default"
+                onPress={handleLogout}>
+                Log Out
+            </Button>
         </div>
     );
 }

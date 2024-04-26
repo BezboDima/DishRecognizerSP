@@ -21,9 +21,7 @@ def lambda_handler(event, context):
             },
             ConsistentRead=True
         )
-        
         item = response['Item']
-
         # Replace 'your-attribute-name' with the attribute you want to retrieve
         attribute_value = item.get(event['item'])
         return {'status' : True, 'item' : attribute_value}
